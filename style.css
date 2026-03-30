@@ -251,6 +251,16 @@ button {
   left: var(--container-padding);
 }
 
+@media (min-width: 1024px) {
+  .nav .container {
+    position: static; /* Allow absolute items to escape the centered container width */
+  }
+  .nav .nav-logo {
+    left: 4vw !important;
+    top: 1.5rem !important;
+  }
+}
+
 .nav-logo .logo-image {
   height: 72px;
   /* Very large text-balanced scale */
