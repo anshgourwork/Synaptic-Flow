@@ -2189,3 +2189,31 @@ div:has(> a[href*="spline.design"]) {
   opacity: 1;
   transform: translateY(0);
 }
+/* ============================================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   ============================================================ */
+
+/* Static robot image — hidden on desktop, shown on mobile */
+.hero-robot-static {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Show static robot image on mobile, hide Spline canvas */
+  .hero-robot-static {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .spline-container {
+    display: none !important; /* Kill WebGL entirely on mobile */
+  }
+
+  /* Disable noise overlay on mobile for performance */
+  .noise-overlay {
+    display: none !important;
+  }
+}
