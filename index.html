@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Synaptic Flow</title>
+  <title>Synaptic Flow | AI-Powered Business Automation</title>
   <meta name="description" content="Synaptic Flow is an AI automation agency that designs intelligent workflows, custom AI agents, and data pipeline solutions to accelerate your business.">
+  
+  <!-- SEO & Social Media Meta Tags -->
+  <meta property="og:title" content="Synaptic Flow | AI-Powered Business Automation">
+  <meta property="og:description" content="Redefining business efficiency with AI-native workflows and intelligent infrastructure.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://synaptic-flow-steel.vercel.app">
+  <meta property="og:image" content="https://synaptic-flow-steel.vercel.app/LOGO main.png">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Synaptic Flow | AI automation">
+  <meta name="twitter:description" content="Intelligent systems that think, adapt, and execute.">
+  <meta name="twitter:image" content="https://synaptic-flow-steel.vercel.app/LOGO main.png">
+
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cstyle%3E path %7B fill: black; %7D @media (prefers-color-scheme: dark) %7B path %7B fill: white; %7D %7D %3C/style%3E%3Cpath d='M24 73L44 33H64L44 73H24ZM52 65L72 25L84 25L84 35L72 65L52 65Z'/%3E%3C/svg%3E">
   
@@ -17,22 +30,17 @@
     import { Application } from 'https://esm.sh/@splinetool/runtime';
     
     document.addEventListener('DOMContentLoaded', () => {
-      const bgCanvas = document.getElementById('canvas3dBackground');
       const fgCanvas = document.getElementById('canvas3d');
       const loader = document.getElementById('splineLoader');
       
-      const appBg = new Application(bgCanvas);
       const appFg = new Application(fgCanvas);
       
-      // Load both foreground and background models in parallel
-      Promise.all([
-        appFg.load('https://prod.spline.design/l4Z8jUJ92peaxPtR/scene.splinecode'),
-        appBg.load('https://prod.spline.design/rme7AXOJMiiOCB2o/scene.splinecode')
-      ]).then(() => {
-        loader.classList.add('hidden');
-        fgCanvas.classList.add('loaded');
-        bgCanvas.classList.add('loaded');
-      }).catch(err => console.error("Spline Load Error:", err));
+      appFg.load('https://prod.spline.design/l4Z8jUJ92peaxPtR/scene.splinecode')
+        .then(() => {
+          loader.classList.add('hidden');
+          fgCanvas.classList.add('loaded');
+        })
+        .catch(err => console.error("Spline Load Error:", err));
     });
   </script>
 </head>
@@ -88,9 +96,6 @@
        HERO SECTION — Light, augen.pro inspired
        ============================================================ -->
   <section class="hero" id="hero">
-    <!-- Canvas for Background abstract element (covers whole page) -->
-    <canvas id="canvas3dBackground"></canvas>
-
     <!-- Top Heading -->
     <h2 class="hero-top-heading reveal">
       <span class="heading-line-1"><span class="if-word">IF</span> <span class="text-hollow">IT'S</span> <span class="text-solid">MANUAL</span></span>

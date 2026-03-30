@@ -84,18 +84,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Custom Vanilla JS 'BackgroundPaths' Animation ---
   const bgContainer = document.getElementById('floatingPathsBg');
   if (bgContainer) {
+    const isMobile = window.innerWidth < 768;
     const createPaths = (position) => {
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('class', 'floating-paths-svg');
       svg.setAttribute('viewBox', '0 0 696 316');
       svg.setAttribute('fill', 'none');
 
-      for (let i = 0; i < 36; i++) {
+      const pathCount = isMobile ? 12 : 36;
+      for (let i = 0; i < pathCount; i++) {
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         const d = `M-${380 - i * 5 * position} -${189 + i * 6}C-${380 - i * 5 * position} -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${152 - i * 5 * position} ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${684 - i * 5 * position} ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`;
         
         path.setAttribute('d', d);
-        // Original reacts uses a color mapping on the stroke, let's use the explicit rgba black for light theme
         const opacity = 0.1 + i * 0.03;
         path.setAttribute('stroke', `rgba(15,23,42,${opacity})`); 
         path.setAttribute('stroke-width', 0.5 + i * 0.03);
