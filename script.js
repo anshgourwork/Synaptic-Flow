@@ -72,6 +72,87 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // --- Liquid Glass Nav Indicator (Desktop Only) ---
+  if (window.innerWidth > 768) {
+    const navLinksContainer = document.getElementById('navLinks');
+    const indicator = document.getElementById('navGlassIndicator');
+    const navLinkEls = navLinksContainer.querySelectorAll('.nav-link');
+    let currentActiveLink = null;
+    let isHovering = false;
+
+    function moveIndicatorTo(linkEl) {
+      if (!linkEl || !indicator) return;
+      const containerRect = navLinksContainer.getBoundingClientRect();
+      const linkRect = linkEl.getBoundingClientRect();
+      const left = linkRect.left - containerRect.left;
+      const width = linkRect.width;
+
+      indicator.style.left = left + 'px';
+      indicator.style.width = width + 'px';
+      indicator.classList.add('active');
+    }
+
+    // Hover events
+    navLinkEls.forEach((link) => {
+      link.addEventListener('mouseenter', () => {
+        isHovering = true;
+        moveIndicatorTo(link);
+      });
+    });
+
+    navLinksContainer.addEventListener('mouseleave', () => {
+      isHovering = false;
+      if (currentActiveLink) {
+        moveIndicatorTo(currentActiveLink);
+      } else {
+        indicator.classList.remove('active');
+      }
+    });
+
+    // Scroll-based active section detection
+    const sections = ['hero', 'services', 'testimonials', 'about'];
+
+    function updateActiveSection() {
+      if (isHovering) return;
+
+      const scrollY = window.scrollY + 150;
+      let activeSection = null;
+
+      for (const id of sections) {
+        const section = document.getElementById(id);
+        if (section) {
+          const top = section.offsetTop;
+          const bottom = top + section.offsetHeight;
+          if (scrollY >= top && scrollY < bottom) {
+            activeSection = id;
+            break;
+          }
+        }
+      }
+
+      // Update active link styling
+      navLinkEls.forEach((link) => {
+        if (link.dataset.section === activeSection) {
+          link.classList.add('glass-active');
+          currentActiveLink = link;
+        } else {
+          link.classList.remove('glass-active');
+        }
+      });
+
+      // Move indicator to active section
+      if (currentActiveLink) {
+        moveIndicatorTo(currentActiveLink);
+      }
+    }
+
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    // Initial position
+    setTimeout(() => {
+      updateActiveSection();
+    }, 100);
+  }
+
 
 
   // --- Dynamic year in copyright ---
@@ -123,5 +204,87 @@ document.addEventListener('DOMContentLoaded', () => {
       path.style.animation = `dashAnim ${duration}s linear infinite`;
     });
   }
+
+  // --- Special Text Animation (Scramble Reveal) ---
+  const RANDOM_CHARS = "_!X$0-+*#";
+  function getRandomChar(prevChar) {
+    let char;
+    do { char = RANDOM_CHARS[Math.floor(Math.random() * RANDOM_CHARS.length)]; }
+    while (char === prevChar);
+    return char;
+  }
+
+  function initSpecialText(elementId, text, speed = 25, delay = 0.8) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    let animationStep = 0;
+    let currentPhase = 'phase1';
+    let intervalId = null;
+
+    const runPhase1 = () => {
+      const maxSteps = text.length * 2;
+      const currentLength = Math.min(animationStep + 1, text.length);
+      let chars = "";
+      for (let i = 0; i < currentLength; i++) {
+        if (text[i] === "\n") {
+          chars += "\n";
+        } else {
+          chars += getRandomChar(chars[i - 1]);
+        }
+      }
+      for (let i = currentLength; i < text.length; i++) {
+        chars += (text[i] === "\n") ? "\n" : "\u00A0"; 
+      }
+      el.textContent = chars;
+      if (animationStep < maxSteps - 1) {
+        animationStep++;
+      } else {
+        currentPhase = 'phase2';
+        animationStep = 0;
+      }
+    };
+
+    const runPhase2 = () => {
+      const revealedCount = Math.floor(animationStep / 2);
+      let chars = "";
+      for (let i = 0; i < revealedCount && i < text.length; i++) {
+        chars += text[i];
+      }
+      if (revealedCount < text.length) {
+        if (text[revealedCount] === "\n") {
+          chars += "\n";
+        } else {
+          chars += (animationStep % 2 === 0) ? "_" : getRandomChar();
+        }
+      }
+      for (let i = chars.length; i < text.length; i++) {
+        if (text[i] === "\n") {
+          chars += "\n";
+        } else {
+          chars += getRandomChar();
+        }
+      }
+      el.textContent = chars;
+      if (animationStep < text.length * 2 - 1) {
+        animationStep++;
+      } else {
+        el.textContent = text;
+        clearInterval(intervalId);
+        el.classList.add('reveal-done');
+      }
+    };
+
+    const startAnimation = () => {
+      intervalId = setInterval(() => {
+        if (currentPhase === 'phase1') runPhase1();
+        else runPhase2();
+      }, speed);
+    };
+
+    setTimeout(startAnimation, delay * 1000);
+  }
+
+  initSpecialText('specialTextSubheading', "Intelligence that runs your business\nbehind the scenes", 25, 0.4);
 
 });

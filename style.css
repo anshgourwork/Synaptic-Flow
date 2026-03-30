@@ -1,5 +1,5 @@
 /* ============================================================
-   SYNAPTIC FLOW — Design System & Styles
+   SYNAPTIC FLOW â€” Design System & Styles
    ============================================================ */
 
 /* --- Fonts --- */
@@ -17,8 +17,22 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Druk';
+  src: url('Druk-Super-Trial.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DrukTextWide';
+  src: url('DrukTextWide-Super-Trial.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
 /* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:wght@800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2-family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:wght@800;900&display=swap');
 
 /* --- Custom Properties --- */
 :root {
@@ -198,7 +212,7 @@ button {
 }
 
 /* ============================================================
-   NAVIGATION — Light hero style (augen-inspired)
+   NAVIGATION â€” Light hero style (augen-inspired)
    ============================================================ */
 .nav {
   position: fixed;
@@ -261,28 +275,73 @@ button {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.5rem 1rem;
+  padding: 0.35rem;
   border-radius: 100px;
   transition: all 0.5s var(--ease-out-expo);
+  position: relative;
 
-  /* Removed glass effect */
-  background: #ffffff;
-  border: 1px solid var(--hero-border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  /* Liquid Glass effect */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* Sliding glass indicator */
+.nav-glass-indicator {
+  position: absolute;
+  top: 0.35rem;
+  left: 0;
+  height: calc(100% - 0.7rem);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 1px 8px rgba(0, 0, 0, 0.08),
+    0 0.5px 0 rgba(255, 255, 255, 0.9) inset;
+  pointer-events: none;
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease;
+  opacity: 0;
+  z-index: 0;
+  will-change: left, width;
+}
+
+.nav-glass-indicator.active {
+  opacity: 1;
+}
+
+/* Hidden SVG filter */
+.liquid-glass-svg-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .nav-link {
   font-size: var(--fs-nav);
   font-weight: 450;
   color: var(--hero-text-secondary);
-  transition: all var(--transition-fast);
+  transition: color 0.25s ease;
   padding: 0.45rem 1.1rem;
   border-radius: 100px;
+  position: relative;
+  z-index: 1;
 }
 
 .nav-link:hover {
   color: var(--hero-text);
-  background: rgba(0, 0, 0, 0.06);
+}
+
+.nav-link.glass-active {
+  color: var(--hero-text);
+  font-weight: 500;
 }
 
 .nav-link .link-number {
@@ -403,7 +462,7 @@ button {
   opacity: 1;
 }
 
-/* Scrolled state — dark nav */
+/* Scrolled state â€” dark nav */
 .nav.scrolled {
   background: #050505;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -419,20 +478,21 @@ button {
 }
 
 .nav.scrolled .nav-links {
-  background: #ffffff;
-  /* Keep it solid white even when scrolled */
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(24px) saturate(2);
+  -webkit-backdrop-filter: blur(24px) saturate(2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .nav.scrolled .nav-link {
   color: #111111;
-  /* Dark text on white pill */
 }
 
 .nav.scrolled .nav-link:hover {
   color: #000;
-  background: rgba(0, 0, 0, 0.05);
 }
 
 .nav.scrolled .interactive-hover-btn {
@@ -487,7 +547,7 @@ button {
 }
 
 /* ============================================================
-   HERO SECTION — Light, augen.pro inspired
+   HERO SECTION â€” Light, augen.pro inspired
    ============================================================ */
 .hero {
   min-height: 100vh;
@@ -505,7 +565,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'DrukTextWide', sans-serif;
   font-size: clamp(3rem, 7vw, 6.5rem);
   font-weight: 900;
   letter-spacing: -0.02em;
@@ -516,6 +576,32 @@ button {
   line-height: 1.0;
   /* eased up to reduce vertical overlap */
   text-transform: uppercase;
+}
+
+/* Subheading Wrapper & Special Text */
+.hero-subheading-wrapper {
+  display: none; /* Hidden by default (Desktop) */
+  align-self: center;
+  margin-top: 1.5rem;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+}
+
+.special-text-subheading {
+  font-family: inherit; /* overridden on mobile */
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 500;
+  color: var(--hero-text-secondary);
+  letter-spacing: 0.05em;
+  display: inline-block;
+  min-height: 1.5em;
+  white-space: pre-wrap;
+  transition: opacity 0.3s ease;
+}
+
+.special-text-subheading.reveal-done {
+  color: var(--hero-text);
 }
 
 .text-hollow {
@@ -553,7 +639,7 @@ button {
   font-size: 1.4em;
 }
 
-/* 3D Model area — center of hero */
+/* 3D Model area â€” center of hero */
 .hero-visual {
   position: absolute;
   top: 12rem;
@@ -656,7 +742,7 @@ div:has(> a[href*="spline.design"]) {
 }
 
 
-/* Bottom content — overlaid on hero */
+/* Bottom content â€” overlaid on hero */
 .hero-bottom {
   position: relative;
   z-index: 2;
@@ -1647,10 +1733,10 @@ div:has(> a[href*="spline.design"]) {
 }
 
 /* ============================================================
-   LIQUID GLASS — Fixed Bottom CTA Button (Apple-inspired)
+   LIQUID GLASS â€” Fixed Bottom CTA Button (Apple-inspired)
    ============================================================ */
 
-/* Hidden SVG filter — must be in the DOM */
+/* Hidden SVG filter â€” must be in the DOM */
 .unused-glass-filter {
   position: absolute;
   width: 0;
@@ -1683,7 +1769,7 @@ div:has(> a[href*="spline.design"]) {
   }
 }
 
-/* ─── Core pill ─── */
+/* â”€â”€â”€ Core pill â”€â”€â”€ */
 
 .floating-cta-btn {
   position: relative;
@@ -1696,14 +1782,20 @@ div:has(> a[href*="spline.design"]) {
   font-size: 0.9rem;
   font-weight: 600;
   color: #000;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  /* Liquid Glass effect */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
   transition: all 0.3s var(--ease-out-expo);
-  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.22));
 }
 
 .floating-cta-btn::before,
@@ -1718,7 +1810,7 @@ div:has(> a[href*="spline.design"]) {
   transition: transform 0.28s var(--ease-out-expo), opacity 0.2s ease;
 }
 
-/* ── Hover ── */
+/* â”€â”€ Hover â”€â”€ */
 .floating-cta-btn:hover {
   transform: scale(1.045);
   filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.13));
@@ -1733,13 +1825,13 @@ div:has(> a[href*="spline.design"]) {
   background: rgba(255, 255, 255, 0.13);
 }
 
-/* ── Press ── */
+/* â”€â”€ Press â”€â”€ */
 .floating-cta-btn:active {
   transform: scale(0.965);
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
 }
 
-/* ─── Dark mode is now identical to the base — both are transparent ─── */
+/* â”€â”€â”€ Dark mode is now identical to the base â€” both are transparent â”€â”€â”€ */
 /* No overrides needed; the default transparent style works on both light + dark bgs */
 
 
@@ -1811,7 +1903,7 @@ div:has(> a[href*="spline.design"]) {
   color: var(--accent-2);
 }
 
-/* ── Responsive ── */
+/* â”€â”€ Responsive â”€â”€ */
 @media (max-width: 768px) {
   .testimonials-grid {
     grid-template-columns: 1fr;
@@ -2136,10 +2228,10 @@ div:has(> a[href*="spline.design"]) {
 }
 
 /* ============================================================
-   SOLUTION CARDS � Staggered scroll entrance animation
+   SOLUTION CARDS ï¿½ Staggered scroll entrance animation
    ============================================================ */
 
-/* Initial hidden state � cards start invisible, shifted down */
+/* Initial hidden state ï¿½ cards start invisible, shifted down */
 .solution-card {
   opacity: 0;
   transform: translateY(48px);
@@ -2152,7 +2244,7 @@ div:has(> a[href*="spline.design"]) {
     box-shadow 0.6s var(--ease-out-expo);
 }
 
-/* Visible state � triggered by JS adding .card-visible */
+/* Visible state ï¿½ triggered by JS adding .card-visible */
 .solution-card.card-visible {
   opacity: 1;
   transform: translateY(0);
@@ -2193,7 +2285,7 @@ div:has(> a[href*="spline.design"]) {
    MOBILE PERFORMANCE OPTIMIZATIONS
    ============================================================ */
 
-/* Static robot image � hidden on desktop, shown on mobile */
+/* Static robot image — hidden on desktop, shown on mobile */
 .hero-robot-static {
   display: none;
 }
@@ -2217,3 +2309,166 @@ div:has(> a[href*="spline.design"]) {
     display: none !important;
   }
 }
+
+/* ============================================================
+   GLOW CARD EFFECT (Desktop Only)
+   ============================================================ */
+@media (min-width: 1024px) {
+  [data-glow] {
+    --border-size: calc(var(--border, 2) * 1px);
+    --spotlight-size: calc(var(--size, 150) * 1px);
+    --hue: calc(var(--base) + (var(--xp, 0) * var(--spread, 0)));
+    --radius: 24; /* Matches solution-card radius */
+    --border: 2;
+    --size: 200;
+    --bg-spot-opacity: 0.08;
+    --border-spot-opacity: 0.8;
+    --border-light-opacity: 0.5;
+    --backdrop: rgba(255, 255, 255, 0.03);
+    
+    position: relative;
+    touch-action: none;
+    background-image: radial-gradient(
+      var(--spotlight-size) var(--spotlight-size) at
+      calc(var(--x, 0) * 1px)
+      calc(var(--y, 0) * 1px),
+      hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity)),
+      transparent
+    );
+    background-color: var(--backdrop);
+    background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+    background-position: 50% 50%;
+    background-attachment: fixed;
+    border: var(--border-size) solid rgba(255, 255, 255, 0.05);
+    border-radius: calc(var(--radius) * 1px);
+  }
+
+  [data-glow]::before,
+  [data-glow]::after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: calc(var(--border-size) * -1);
+    border: var(--border-size) solid transparent;
+    border-radius: calc(var(--radius) * 1px);
+    background-attachment: fixed;
+    background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    mask-clip: padding-box, border-box;
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in, xor;
+    z-index: 2;
+  }
+
+  [data-glow]::before {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
+      calc(var(--x, 0) * 1px)
+      calc(var(--y, 0) * 1px),
+      hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity)),
+      transparent 100%
+    );
+    filter: brightness(1.5);
+  }
+
+  [data-glow]::after {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size) * 0.4) calc(var(--spotlight-size) * 0.4) at
+      calc(var(--x, 0) * 1px)
+      calc(var(--y, 0) * 1px),
+      hsl(0 100% 100% / var(--border-light-opacity)),
+      transparent 100%
+    );
+  }
+
+  /* Nested glow element for outer blur */
+  [data-glow] [data-glow] {
+    position: absolute;
+    inset: 0;
+    will-change: filter;
+    opacity: var(--outer, 1);
+    border-radius: calc(var(--radius) * 1px);
+    background: none;
+    pointer-events: none;
+    border: none;
+    z-index: 0;
+  }
+
+  /* Disable existing solution-card pseudo-effects when glow is active */
+  .solution-card[data-glow]::after {
+    display: none;
+  }
+}
+
+/* Ensure about-image container works with glow */
+.about-image[data-glow] {
+    overflow: visible;
+    background: #f8f8f8; /* Light background for about section */
+    border-color: rgba(0, 0, 0, 0.05);
+    padding: 0; /* Align with image */
+}
+.about-image[data-glow] img {
+    border-radius: inherit;
+    position: relative;
+    z-index: 3;
+}
+
+  /* Corrected Nested Glow element for outer blur */
+  [data-glow] [data-glow] {
+    position: absolute;
+    inset: 0;
+    will-change: filter;
+    opacity: var(--outer, 1);
+    border-radius: calc(var(--radius) * 1px);
+    border-width: calc(var(--border-size) * 20);
+    filter: blur(calc(var(--border-size) * 10));
+    background: none;
+    pointer-events: none;
+    border: none;
+    z-index: 1;
+  }
+
+  [data-glow] > [data-glow]::before {
+    inset: -10px !important;
+    border-width: 10px !important;
+  }
+
+  /* Adding backdrop blur to glow cards */
+  [data-glow] {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+/* ============================================================
+   RESPONSIVE OVERRIDES
+   ============================================================ */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 82vh !important; /* Reduced from 100vh to shrink empty middle space by 40% */
+  }
+
+  .hero-top-heading {
+    font-family: 'Druk', sans-serif !important;
+    font-size: clamp(3rem, 15vw, 5rem);
+    letter-spacing: -0.01em;
+  }
+
+  .hero-subheading-wrapper {
+    display: block; /* Visible only on Mobile */
+  }
+
+  .special-text-subheading {
+    font-family: 'Neue Haas Grotesk', sans-serif !important;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--hero-text);
+  }
+
+  /* Remove robot image on mobile */
+  .hero-robot-static {
+    display: none !important;
+  }
+}
+
