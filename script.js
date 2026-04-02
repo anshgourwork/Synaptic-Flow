@@ -109,14 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Scroll-based active section detection
-    const sections = ['hero', 'services', 'testimonials', 'about'];
+    // Scroll-based active section detection & Theme Switcher
+    const sections = ['hero', 'overview', 'about', 'testimonials', 'services', 'approach', 'solutions'];
+    const darkSections = ['overview', 'services', 'solutions'];
 
     function updateActiveSection() {
       if (isHovering) return;
 
-      const scrollY = window.scrollY + 150;
-      let activeSection = null;
+      const scrollY = window.scrollY + 100;
+      let activeSection = 'hero';
 
       for (const id of sections) {
         const section = document.getElementById(id);
@@ -128,6 +129,15 @@ document.addEventListener('DOMContentLoaded', () => {
             break;
           }
         }
+      }
+
+      // Update Nav Theme (Desktop)
+      if (darkSections.includes(activeSection)) {
+        nav.classList.add('nav-over-dark');
+        nav.classList.remove('nav-over-light');
+      } else {
+        nav.classList.add('nav-over-light');
+        nav.classList.remove('nav-over-dark');
       }
 
       // Update active link styling
