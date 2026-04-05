@@ -295,6 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(startAnimation, delay * 1000);
   }
 
-  initSpecialText('specialTextSubheading', "Intelligence that runs your business\nbehind the scenes", 25, 0.4);
+  const isMobileView = window.innerWidth < 768;
+  initSpecialText('specialTextSubheading', "Intelligence that runs your business\nbehind the scenes", isMobileView ? 15 : 25, 0.4);
 
 });
