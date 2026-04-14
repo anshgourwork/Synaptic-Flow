@@ -74,15 +74,7 @@
         <div class="nav-glass-indicator" id="navGlassIndicator"></div>
       </ul>
 
-      <!-- Liquid Glass SVG Filter -->
-      <svg class="liquid-glass-svg-filter" aria-hidden="true">
-        <filter id="liquidGlassNav" primitiveUnits="objectBoundingBox">
-          <feImage result="map" width="100%" height="100%" x="0" y="0"
-            href="data:image/webp;base64,UklGRq4vAABXRUJQVlA4WAoAAAAQAAAA5wEAhwAAQUxQSOYWAAABHAVpGzCrf9t7EiJCYdIGTDpvURGm9n7K+YS32rZ1W8q0LSSEBCQgAQlIwEGGA3CQOAAHSEDCJSEk4KDvUmL31vrYkSX3ufgXEb4gSbKt2LatxlqIgNBBzbM3ikHVkvUvq7btKpaOBCQgIRIiAQeNg46DwgE4oB1QDuKgS0IcXBykXieHkwdjX/4iAhZtK3ErSBYGEelp+4aM/5/+z14+//jLlz/++s/Xr4//kl9C8Ns8DaajU+lPX/74+viv/eWxOXsO+eHL3/88/ut/2b0zref99evjX8NLmNt1fP7178e/jJcw9k3G//XP49/Iy2qaa7328Xkk9ZnWx0VUj3bcyCY4Pi7C6reeEagEohnRCbQQwFmUp9ggYQj8MChjTSI0Ck7G/bh6P5ykNU9yP+10G8I2UAwXeQ96DQwNjqyPu/c4tK+5CtGOK0oM7AH5f767lHpotXVYYI66B+HjMhHj43C5wok3YDH4/vZFZRkB7rNnEfC39WS2Q3K78y525wFNTPf5f+/fN9YI1YyDvjuzV5rQtsfn1Ez1ka3PkeGxOZ6IODxDJqCLpF7vdb9Z3s/ufLr6jf/55zbW3LodwwVVg7Lmao+p3eGcqDFDGuuKnlBZAPSbnkYtTX+mZl2y57Gq85F3tDv7m7/yzpjXHoVA3YUObsHz80W3IUK1E8yRqggxTMzD4If2230ys7RDxWrLu9o9GdSWNwNRC" />
-          <feGaussianBlur in="SourceGraphic" stdDeviation="0.04" result="blur" />
-          <feDisplacementMap in="blur" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
+
 
       <a href="https://cal.com/ansh-gour-oewwlq/30min" target="_blank" class="interactive-hover-btn group">
         <span class="ihb-text-initial">Let's Talk</span>
@@ -144,10 +136,7 @@
       </div>
     </div>
 
-    <!-- Bottom-left text (like augen's "augen / Beyond Humanware.") -->
-    <div class="hero-bottom reveal">
 
-    </div>
 
     <!-- Scroll indicator -->
     <div class="hero-scroll">
@@ -169,9 +158,7 @@
           <span class="badge-text">Overview</span>
         </div>
         <h2 class="overview-heading">AI is here. Most will <span style="color:var(--accent-2)">react.</span><br>The few with a plan will <span style="color:var(--accent-2)">lead.</span><br><br>We build for those <span style="color:var(--accent-2)">few.</span></h2>
-        <p class="overview-intro">
-          Synaptic Flow is pioneering the next wave of AI-powered automation, designing invisible infrastructure that enhances every layer of your operations.
-        </p>
+
       </div>
 
 
@@ -184,16 +171,16 @@
        ============================================================ -->
   <section class="section about light-section" id="about">
     <div class="container">
+      <div class="section-kicker-badge reveal" style="margin-bottom: 5rem; margin-top: -8rem; position: relative; z-index: 10;">
+        <span class="badge-number">2</span>
+        <span class="badge-text">About Founder</span>
+      </div>
       <div class="about-grid">
         <div class="about-image reveal">
           <img src="ansh.jpg.jpeg" alt="Ansh Gour">
         </div>
         <div class="about-content reveal reveal-delay-1">
           <div class="about-header">
-            <div class="section-kicker-badge reveal">
-              <span class="badge-number">2</span>
-              <span class="badge-text">About Founder</span>
-            </div>
             <h2 class="about-name">Ansh Gour</h2>
             <div class="about-title">Founder, CEO</div>
           </div>
@@ -208,15 +195,53 @@
         </div>
       </div>
     </div>
-    <div class="section-fade fade-to-light" aria-hidden="true"></div>
+    <div class="section-fade fade-to-dark" aria-hidden="true"></div>
   </section>
 
 
 
   <!-- ============================================================
+       LOGO CLOUD SECTION (Desktop Only)
+       ============================================================ -->
+  <section class="section logo-cloud-section" id="logo-cloud" aria-label="Tools used by the best">
+    <div class="logo-cloud-inner">
+      <div class="logo-cloud-header">
+        <p class="logo-cloud-sub">Already used by</p>
+        <h2 class="logo-cloud-heading">Best in the Game</h2>
+      </div>
+      <div class="logo-cloud-divider"></div>
+      <div class="logo-cloud-slider-wrapper">
+        <div class="logo-cloud-slider" id="logoCloudSlider">
+          <div class="logo-cloud-track">
+            <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia" loading="lazy">
+            <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase" loading="lazy">
+            <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI" loading="lazy">
+            <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso" loading="lazy">
+            <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel" loading="lazy">
+            <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub" loading="lazy">
+            <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI" loading="lazy">
+            <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk" loading="lazy">
+            <!-- Duplicated for seamless loop -->
+            <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="" loading="lazy" aria-hidden="true">
+            <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="" loading="lazy" aria-hidden="true">
+            <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="" loading="lazy" aria-hidden="true">
+            <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="" loading="lazy" aria-hidden="true">
+            <img src="https://svgl.app/library/vercel_wordmark.svg" alt="" loading="lazy" aria-hidden="true">
+            <img src="https://svgl.app/library/github_wordmark_light.svg" alt="" loading="lazy" aria-hidden="true">
+            <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="" loading="lazy" aria-hidden="true">
+            <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="" loading="lazy" aria-hidden="true">
+          </div>
+        </div>
+      </div>
+      <div class="logo-cloud-divider"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        TESTIMONIALS SECTION
        ============================================================ -->
   <section class="section testimonials light-section" id="testimonials">
+    <div class="section-fade-top fade-from-dark" aria-hidden="true"></div>
     <div class="container">
       <div class="section-kicker-badge reveal" style="margin-bottom: 1.5rem;">
         <span class="badge-number">3</span>
@@ -227,7 +252,7 @@
       <div class="testimonials-grid">
         <div class="testimonial-card reveal">
           <p class="testimonial-text">
-            In just nine weeks, <span class="text-accent">Synaptic flow uncovered critical inefficiencies and clear opportunities for AI automation.</span> They delivered the clarity, direction, and practical roadmap we needed to drive real operational efficiency and future proof our business.
+            <span class="text-accent">Synaptic Flow turned our inactive leads into a steady stream of qualified booked calls.</span> Their AI reactivation system delivered results with minimal effort on our end.
           </p>
           <div class="testimonial-author">
             <span class="author-name">Ishan Verik</span>
@@ -393,10 +418,10 @@
        ============================================================ -->
   <section class="section cta-section" id="solutions">
     <div class="container">
-      <div class="section-label reveal" style="justify-content: center;">Solutions</div>
+
       <h2 class="cta-heading reveal">The Future<br>Is Autonomous.</h2>
       <p class="cta-desc reveal reveal-delay-1">
-        At the intersection of AI and business operations, we build systems that think, adapt, and execute — so you can focus on what matters.
+        At the intersection of AI and business operations, we build systems that think, adapt, and execute so you can focus on what matters.
       </p>
       <div class="reveal reveal-delay-2">
         <a href="https://cal.com/ansh-gour-oewwlq/30min" target="_blank" class="btn btn-primary">Let's Build Together <span class="btn-arrow">→</span></a>

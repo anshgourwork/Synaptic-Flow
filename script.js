@@ -172,48 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     yearEl.textContent = yearEl.textContent.replace('2026', year);
   }
   
-  // --- Custom Vanilla JS 'BackgroundPaths' Animation ---
-  const bgContainer = document.getElementById('floatingPathsBg');
-  if (bgContainer) {
-    const isMobile = window.innerWidth < 768;
-    const createPaths = (position) => {
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('class', 'floating-paths-svg');
-      svg.setAttribute('viewBox', '0 0 696 316');
-      svg.setAttribute('fill', 'none');
 
-      const pathCount = isMobile ? 12 : 36;
-      for (let i = 0; i < pathCount; i++) {
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        const d = `M-${380 - i * 5 * position} -${189 + i * 6}C-${380 - i * 5 * position} -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${152 - i * 5 * position} ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${684 - i * 5 * position} ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`;
-        
-        path.setAttribute('d', d);
-        const opacity = 0.1 + i * 0.03;
-        path.setAttribute('stroke', `rgba(15,23,42,${opacity})`); 
-        path.setAttribute('stroke-width', 0.5 + i * 0.03);
-
-        svg.appendChild(path);
-      }
-      return svg;
-    };
-
-    bgContainer.appendChild(createPaths(1));
-    bgContainer.appendChild(createPaths(-1));
-
-    // Calculate length for the CSS animation DashArray mimicking Framer Motion logic
-    const allPaths = bgContainer.querySelectorAll('path');
-    allPaths.forEach((path) => {
-      const length = path.getTotalLength();
-      
-      // Frame motion pathLength: 0.3 to 1 means we can set dash array so it draws 30% to 100% of the line.
-      // Easiest seamless way in vanilla is to set the dash array to a fraction, and animate the offset entirely.
-      path.style.strokeDasharray = `${length * 0.25} ${length * 0.75}`;
-      path.style.setProperty('--path-length', length);
-      
-      const duration = 20 + Math.random() * 10;
-      path.style.animation = `dashAnim ${duration}s linear infinite`;
-    });
-  }
 
   // --- Special Text Animation (Scramble Reveal) ---
   const RANDOM_CHARS = "_!X$0-+*#";
@@ -281,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         el.textContent = text;
         clearInterval(intervalId);
-        el.classList.add('reveal-done');
+        el.classList.add('reveal-done', 'shiny-text');
       }
     };
 
@@ -296,6 +255,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const isMobileView = window.innerWidth < 768;
-  initSpecialText('specialTextSubheading', "Intelligence that runs your business\nbehind the scenes", isMobileView ? 15 : 25, 0.4);
+  if (isMobileView) {
+    const el = document.getElementById('specialTextSubheading');
+    if (el) {
+      el.textContent = "Intelligence that runs your business\nbehind the scenes";
+      el.classList.add('reveal-done', 'shiny-text');
+    }
+  } else {
+    initSpecialText('specialTextSubheading', "Intelligence that runs your business\nbehind the scenes", 25, 0.4);
+  }
 
 });

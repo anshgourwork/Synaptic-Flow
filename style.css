@@ -636,6 +636,12 @@ button {
   color: var(--hero-text);
 }
 
+@media (min-width: 1025px) {
+  .hero {
+    min-height: 115vh; /* Increased for desktop */
+  }
+}
+
 /* Typography behind 3D model */
 .hero-top-heading {
   align-self: center;
@@ -659,7 +665,7 @@ button {
 .hero-subheading-wrapper {
   display: none; /* Hidden by default (Desktop) */
   align-self: center;
-  margin-top: 1.5rem;
+  margin-top: 4.5rem;
   z-index: 10;
   text-align: center;
   width: 100%;
@@ -739,7 +745,6 @@ button {
   overflow: hidden;
 }
 
-#canvas3dBackground,
 #canvas3d {
   position: absolute;
   top: 0;
@@ -747,14 +752,6 @@ button {
   width: 100%;
   height: 100%;
   opacity: 0;
-}
-
-#canvas3dBackground {
-  z-index: -1;
-  /* Pushed further back behind the typography (z-index: 0) */
-  pointer-events: none;
-  /* User explicitly said: restrict interactivity */
-  transition: opacity 1.5s var(--ease-out-expo);
 }
 
 #canvas3d {
@@ -819,7 +816,7 @@ div:has(> a[href*="spline.design"]) {
 }
 
 
-/* Bottom content â€” overlaid on hero */
+/* Bottom content — overlaid on hero */
 .hero-bottom {
   position: relative;
   z-index: 2;
@@ -1075,7 +1072,11 @@ div:has(> a[href*="spline.design"]) {
    ============================================================ */
 .about {
   border-top: 1px solid var(--bg-card-border);
-  padding: clamp(8rem, 15vh, 14rem) 0;
+  padding: clamp(10rem, 15vh, 15rem) 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 90vh; /* Ensures it takes up most of the viewport while staying centered */
 }
 
 .about.light-section {
@@ -1089,6 +1090,7 @@ div:has(> a[href*="spline.design"]) {
   grid-template-columns: 1fr 1.5fr;
   gap: 6rem;
   align-items: center;
+  margin-top: -3rem; /* Shifts the main content block slightly higher */
 }
 
 .about-image {
@@ -1109,11 +1111,14 @@ div:has(> a[href*="spline.design"]) {
 .about-content {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.25rem;
 }
 
 .about-header {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .about-name {
@@ -1161,7 +1166,7 @@ div:has(> a[href*="spline.design"]) {
 
 @media (max-width: 1024px) {
   .about {
-    padding: clamp(6rem, 10vh, 8rem) 0;
+    padding: clamp(10rem, 18vh, 14rem) 0;
   }
 
   .about-grid {
@@ -1175,13 +1180,13 @@ div:has(> a[href*="spline.design"]) {
   }
 
   .about-content {
-    text-align: center;
+    text-align: left;
   }
 
   .about-header {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 }
 
@@ -1810,17 +1815,8 @@ div:has(> a[href*="spline.design"]) {
 }
 
 /* ============================================================
-   LIQUID GLASS â€” Fixed Bottom CTA Button (Apple-inspired)
+   LIQUID GLASS — Fixed Bottom CTA Button (Apple-inspired)
    ============================================================ */
-
-/* Hidden SVG filter â€” must be in the DOM */
-.unused-glass-filter {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
 
 .floating-cta-bar {
   position: fixed;
@@ -1846,7 +1842,7 @@ div:has(> a[href*="spline.design"]) {
   }
 }
 
-/* â”€â”€â”€ Core pill â”€â”€â”€ */
+/* ——— Core pill ——— */
 
 .floating-cta-btn {
   position: relative;
@@ -1887,7 +1883,7 @@ div:has(> a[href*="spline.design"]) {
   transition: transform 0.28s var(--ease-out-expo), opacity 0.2s ease;
 }
 
-/* â”€â”€ Hover â”€â”€ */
+/* ——— Hover ——— */
 .floating-cta-btn:hover {
   transform: scale(1.045);
   filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.13));
@@ -1902,13 +1898,13 @@ div:has(> a[href*="spline.design"]) {
   background: rgba(255, 255, 255, 0.13);
 }
 
-/* â”€â”€ Press â”€â”€ */
+/* ——— Press ——— */
 .floating-cta-btn:active {
   transform: scale(0.965);
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
 }
 
-/* â”€â”€â”€ Dark mode is now identical to the base â€” both are transparent â”€â”€â”€ */
+/* ——— Dark mode is now identical to the base — both are transparent ——— */
 /* No overrides needed; the default transparent style works on both light + dark bgs */
 
 
@@ -1917,7 +1913,7 @@ div:has(> a[href*="spline.design"]) {
    TESTIMONIALS SECTION
    ============================================================ */
 .testimonials {
-  border-top: 2px solid #111111 !important;
+  border-top: none !important;
   padding: clamp(8rem, 15vh, 14rem) 0;
   position: relative;
   z-index: 2;
@@ -1980,7 +1976,7 @@ div:has(> a[href*="spline.design"]) {
   color: var(--accent-2);
 }
 
-/* â”€â”€ Responsive â”€â”€ */
+/* ——— Responsive ——— */
 @media (max-width: 768px) {
   .testimonials-grid {
     grid-template-columns: 1fr;
@@ -2127,6 +2123,104 @@ div:has(> a[href*="spline.design"]) {
 }
 
 /* ============================================================
+   LOGO CLOUD SECTION
+   ============================================================ */
+.logo-cloud-section {
+  display: none;
+  background-color: var(--bg-primary);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 1025px) {
+  .logo-cloud-section {
+    display: block;
+  }
+}
+
+.logo-cloud-inner {
+  padding: 6rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.logo-cloud-header {
+  text-align: center;
+}
+
+.logo-cloud-sub {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--text-tertiary);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.logo-cloud-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+}
+
+.logo-cloud-divider {
+  width: 100%;
+  max-width: 500px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent);
+}
+
+.logo-cloud-slider-wrapper {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+.logo-cloud-slider {
+  overflow: hidden;
+  width: 100%;
+}
+
+.logo-cloud-track {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  width: max-content;
+  animation: logoSlide 30s linear infinite;
+}
+
+.logo-cloud-track:hover {
+  animation-play-state: paused;
+}
+
+.logo-cloud-track img {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.65;
+  filter: brightness(0) invert(1);
+  transition: opacity 0.3s ease;
+  flex-shrink: 0;
+}
+
+.logo-cloud-track:hover img {
+  opacity: 1;
+}
+
+@keyframes logoSlide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================================
    SECTION BLUR FADE EFFECTS
    ============================================================ */
 .section .container {
@@ -2149,13 +2243,35 @@ div:has(> a[href*="spline.design"]) {
   pointer-events: none;
 }
 
+.section-fade-top {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  mask-image: linear-gradient(to top, transparent 0%, black 80%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 80%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 .fade-to-dark {
   background: linear-gradient(to bottom, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 1) 90%);
+}
+
+.fade-from-dark {
+  background: linear-gradient(to top, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 1) 90%);
 }
 
 .fade-to-light {
   /* Fades into #f5f5f0 (rgb: 245, 245, 240) */
   background: linear-gradient(to bottom, rgba(245, 245, 240, 0) 0%, rgba(245, 245, 240, 1) 90%);
+}
+
+.fade-from-light {
+  background: linear-gradient(to top, rgba(245, 245, 240, 0) 0%, rgba(245, 245, 240, 1) 90%);
 }
 
 /* ============================================================
@@ -2549,3 +2665,19 @@ div:has(> a[href*="spline.design"]) {
   }
 }
 
+
+
+/* Shiny Text Effect */
+@keyframes shinyTextAnim {
+  0% { background-position: 150% center; }
+  100% { background-position: -50% center; }
+}
+.shiny-text {
+  background-image: linear-gradient(120deg, #000000 0%, #000000 35%, #ffffff 50%, #000000 65%, #000000 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shinyTextAnim 3s linear infinite;
+}
