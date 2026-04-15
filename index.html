@@ -18,7 +18,8 @@
   <meta name="twitter:description" content="Intelligent systems that think, adapt, and execute.">
   <meta name="twitter:image" content="https://synaptic-flow-steel.vercel.app/LOGO main.png">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=1.1">
+  <link rel="stylesheet" href="scroll-stack.css?v=1.0">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cstyle%3E path %7B fill: black; %7D @media (prefers-color-scheme: dark) %7B path %7B fill: white; %7D %7D %3C/style%3E%3Cpath d='M24 73L44 33H64L44 73H24ZM52 65L72 25L84 25L84 35L72 65L52 65Z'/%3E%3C/svg%3E">
   
   <!-- Preload Spline Models for faster delivery -->
@@ -121,7 +122,7 @@
     <!-- Central 3D visual area -->
     <div class="hero-visual">
       <!-- Static fallback for mobile (no WebGL needed) -->
-      <img src="robot-mobile.png" alt="AI Robot" class="hero-robot-static">
+
 
       <!-- Spline 3D Scene (desktop only) -->
       <div class="spline-container" id="spline-hero">
@@ -290,11 +291,94 @@
         </p>
       </div>
 
+      <!-- ===== DESKTOP: Scroll-Stack Cards ===== -->
+      <div class="scroll-stack-wrapper" id="scrollStackWrapper">
+        <div class="scroll-stack-inner">
 
+          <!-- Card 1 — Shiny Black -->
+          <div class="scroll-stack-card ss-shiny-black">
+            <div class="ss-card-shimmer"></div>
+            <span class="ss-card-number">01</span>
+            <h3 class="ss-card-title">Lead Generation</h3>
+            <p class="ss-card-desc">AI-powered cold email, outbound automation, and content systems that fill your pipeline with qualified prospects on autopilot.</p>
+            <div class="ss-card-pills">
+              <span class="ss-pill">AI Cold Email</span>
+              <span class="ss-pill">Outbound Automation</span>
+              <span class="ss-pill">Content Systems</span>
+            </div>
+          </div>
 
-      <!-- High-Tech Service Grid -->
-      <div class="solutions-grid">
-        <!-- Panel 1: Lead Generation -->
+          <!-- Card 2 — Metallic Gray -->
+          <div class="scroll-stack-card ss-metallic-gray">
+            <div class="ss-card-shimmer"></div>
+            <span class="ss-card-number">02</span>
+            <h3 class="ss-card-title">Revenue Operations</h3>
+            <p class="ss-card-desc">CRM automation, pipeline optimization, and AI nurture sequences that convert leads into revenue with surgical precision.</p>
+            <div class="ss-card-pills">
+              <span class="ss-pill">CRM Automation</span>
+              <span class="ss-pill">Pipeline Optimization</span>
+              <span class="ss-pill">AI Nurture Sequences</span>
+            </div>
+          </div>
+
+          <!-- Card 3 — Pearl White -->
+          <div class="scroll-stack-card ss-pearl-white">
+            <div class="ss-card-shimmer"></div>
+            <span class="ss-card-number">03</span>
+            <h3 class="ss-card-title">Frontend Experiences</h3>
+            <p class="ss-card-desc">Custom web apps, high-converting landing pages, and interactive demos that leave a lasting impression on every visitor.</p>
+            <div class="ss-card-pills">
+              <span class="ss-pill">Custom Web Apps</span>
+              <span class="ss-pill">Landing Pages</span>
+              <span class="ss-pill">Interactive Demos</span>
+            </div>
+          </div>
+
+          <!-- Card 4 — Shiny Black -->
+          <div class="scroll-stack-card ss-shiny-black">
+            <div class="ss-card-shimmer"></div>
+            <span class="ss-card-number">04</span>
+            <h3 class="ss-card-title">Hiring Systems</h3>
+            <p class="ss-card-desc">Intelligent intake funnels, AI-driven candidate scoring, and fully automated trial workflows that hire A-players faster.</p>
+            <div class="ss-card-pills">
+              <span class="ss-pill">Intake Funnels</span>
+              <span class="ss-pill">AI Scoring</span>
+              <span class="ss-pill">Trial Automation</span>
+            </div>
+          </div>
+
+          <!-- Card 5 — Metallic Gray -->
+          <div class="scroll-stack-card ss-metallic-gray">
+            <div class="ss-card-shimmer"></div>
+            <span class="ss-card-number">05</span>
+            <h3 class="ss-card-title">Revenue Acceleration Systems</h3>
+            <p class="ss-card-desc">Speed-to-lead automation and intelligent lead reactivation systems designed to capture, engage, and convert every opportunity in real time.</p>
+            <div class="ss-card-pills">
+              <span class="ss-pill">Speed to Lead</span>
+              <span class="ss-pill">Lead Reactivation</span>
+              <span class="ss-pill">Conversion Systems</span>
+            </div>
+          </div>
+
+          <!-- Card 6 — Pearl White -->
+          <div class="scroll-stack-card ss-pearl-white">
+            <div class="ss-card-shimmer"></div>
+            <span class="ss-card-number">06</span>
+            <h3 class="ss-card-title">AI Strategy & Training</h3>
+            <p class="ss-card-desc">Team workshops, AI roadmapping, and curated tool selection to align your organisation with the intelligence era.</p>
+            <div class="ss-card-pills">
+              <span class="ss-pill">Team Workshops</span>
+              <span class="ss-pill">AI Roadmapping</span>
+              <span class="ss-pill">Tool Selection</span>
+            </div>
+          </div>
+
+          <div class="scroll-stack-end"></div>
+        </div>
+      </div>
+
+      <!-- ===== MOBILE: Standard Grid Fallback ===== -->
+      <div class="solutions-grid solutions-grid-mobile">
         <div class="solution-card reveal">
           <div class="glow-pattern" style="background: radial-gradient(circle at center, rgba(108, 92, 231, 0.08) 0%, transparent 60%);"></div>
           <h3 class="solution-title">Lead Generation</h3>
@@ -304,8 +388,6 @@
             <span class="solution-label-pill">Content Systems</span>
           </div>
         </div>
-
-        <!-- Panel 2: Revenue Operations -->
         <div class="solution-card reveal reveal-delay-1">
           <div class="glow-pattern" style="background: radial-gradient(circle at center, rgba(162, 155, 254, 0.08) 0%, transparent 60%); animation-delay: -2s;"></div>
           <h3 class="solution-title">Revenue Operations</h3>
@@ -315,8 +397,6 @@
             <span class="solution-label-pill">AI Nurture Sequences</span>
           </div>
         </div>
-
-        <!-- Panel 3: Frontend Experiences -->
         <div class="solution-card reveal reveal-delay-2">
           <div class="glow-pattern" style="background: radial-gradient(circle at center, rgba(116, 185, 255, 0.08) 0%, transparent 60%); animation-delay: -4s;"></div>
           <h3 class="solution-title">Frontend Experiences</h3>
@@ -326,8 +406,6 @@
             <span class="solution-label-pill">Interactive Demos</span>
           </div>
         </div>
-
-        <!-- Panel 4: Hiring Systems -->
         <div class="solution-card reveal">
           <div class="glow-pattern" style="background: radial-gradient(circle at center, rgba(255, 118, 117, 0.06) 0%, transparent 60%); animation-delay: -6s;"></div>
           <h3 class="solution-title">Hiring Systems</h3>
@@ -337,22 +415,18 @@
             <span class="solution-label-pill">Trial Automation</span>
           </div>
         </div>
-
-        <!-- Panel 5: Backend Infrastructure -->
         <div class="solution-card reveal reveal-delay-1">
           <div class="glow-pattern" style="background: radial-gradient(circle at center, rgba(85, 239, 196, 0.06) 0%, transparent 60%); animation-delay: -8s;"></div>
-          <h3 class="solution-title">Backend Infrastructure</h3>
+          <h3 class="solution-title">Revenue Acceleration Systems</h3>
           <div class="solution-labels">
-            <span class="solution-label-pill">API Integrations</span>
-            <span class="solution-label-pill">Data Pipelines</span>
-            <span class="solution-label-pill">AI Agent Systems</span>
+            <span class="solution-label-pill">Speed to Lead</span>
+            <span class="solution-label-pill">Lead Reactivation</span>
+            <span class="solution-label-pill">Conversion Systems</span>
           </div>
         </div>
-
-        <!-- Panel 6: AI Strategy & Training -->
         <div class="solution-card reveal reveal-delay-2">
           <div class="glow-pattern" style="background: radial-gradient(circle at center, rgba(253, 203, 110, 0.06) 0%, transparent 60%); animation-delay: -10s;"></div>
-          <h3 class="solution-title">AI Strategy & Training</h3>
+          <h3 class="solution-title">AI Strategy &amp; Training</h3>
           <div class="solution-labels">
             <span class="solution-label-pill">Team Workshops</span>
             <span class="solution-label-pill">AI Roadmapping</span>

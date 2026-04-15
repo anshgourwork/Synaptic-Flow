@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Smooth scroll for anchor links ---
+  // --- Smooth scroll for anchor links (Native) ---
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
       const target = document.querySelector(this.getAttribute('href'));
@@ -163,16 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
   }
 
-
-
   // --- Dynamic year in copyright ---
   const yearEl = document.querySelector('.footer-copy');
   if (yearEl) {
     const year = new Date().getFullYear();
     yearEl.textContent = yearEl.textContent.replace('2026', year);
   }
-  
-
 
   // --- Special Text Animation (Scramble Reveal) ---
   const RANDOM_CHARS = "_!X$0-+*#";
@@ -264,5 +260,108 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     initSpecialText('specialTextSubheading', "Intelligence that runs your business\nbehind the scenes", 25, 0.4);
   }
-
 });
+
+/* ============================================================
+   SCROLL-STACK ENGINE — Vanilla JS (Standard Scroll Version)
+   Keeps the stacking effect but uses native browser scrolling behavior.
+   ============================================================ */
+(function initScrollStack() {
+  if (window.innerWidth < 1025) return;
+
+  const wrapper = document.getElementById('scrollStackWrapper');
+  if (!wrapper) return;
+
+  const CONFIG = {
+    itemDistance: 100,
+    itemScale: 0.03,
+    itemStackDistance: 30,
+    stackPosition: 0.20,
+    scaleEndPosition: 0.10,
+    baseScale: 0.85
+  };
+
+  const cards = Array.from(wrapper.querySelectorAll('.scroll-stack-card'));
+  const endEl = wrapper.querySelector('.scroll-stack-end');
+  if (!cards.length || !endEl) return;
+
+  function getAbsoluteOffset(el) {
+    let top = 0;
+    while (el) {
+      top += el.offsetTop || 0;
+      el = el.offsetParent;
+    }
+    return top;
+  }
+
+  let cardData = [];
+  let endTopInitial = 0;
+
+  function calculatePositions() {
+    cardData = cards.map((card, i) => {
+      if (i < cards.length - 1) card.style.marginBottom = CONFIG.itemDistance + 'px';
+      card.style.willChange = 'transform';
+      card.style.transformOrigin = 'top center';
+      return {
+        el: card,
+        initialTop: getAbsoluteOffset(card)
+      };
+    });
+    endTopInitial = getAbsoluteOffset(endEl);
+  }
+
+  calculatePositions();
+
+  const lastTransforms = new Map();
+
+  function updateCardTransforms() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const vh = window.innerHeight;
+    const stackPosPx = CONFIG.stackPosition * vh;
+    const scaleEndPx = CONFIG.scaleEndPosition * vh;
+    const endTop = endTopInitial;
+
+    cardData.forEach((data, i) => {
+      const cardTop = data.initialTop;
+      const triggerStart = cardTop - stackPosPx - CONFIG.itemStackDistance * i;
+      const triggerEnd = cardTop - scaleEndPx;
+      const pinStart = triggerStart;
+      const pinEnd = endTop - vh / 1.5;
+
+      let scaleProgress = 0;
+      if (scrollTop > triggerStart) {
+        scaleProgress = Math.min(1, (scrollTop - triggerStart) / (triggerEnd - triggerStart || 1));
+      }
+      
+      const targetScale = CONFIG.baseScale + i * CONFIG.itemScale;
+      const scale = 1 - scaleProgress * (1 - targetScale);
+
+      let translateY = 0;
+      if (scrollTop >= pinStart && scrollTop <= pinEnd) {
+        translateY = scrollTop - cardTop + stackPosPx + CONFIG.itemStackDistance * i;
+      } else if (scrollTop > pinEnd) {
+        translateY = pinEnd - cardTop + stackPosPx + CONFIG.itemStackDistance * i;
+      }
+
+      const transformStr = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+
+      if (lastTransforms.get(i) !== transformStr) {
+        data.el.style.transform = transformStr;
+        lastTransforms.set(i, transformStr);
+      }
+    });
+  }
+
+  // Use passive scroll listener for native performance
+  window.addEventListener('scroll', updateCardTransforms, { passive: true });
+
+  // Recalculate on resize
+  window.addEventListener('resize', () => {
+    cards.forEach(c => c.style.transform = ''); // Reset for measurement
+    calculatePositions();
+    updateCardTransforms();
+  });
+
+  // Initial update
+  updateCardTransforms();
+})();

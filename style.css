@@ -1122,7 +1122,7 @@ div:has(> a[href*="spline.design"]) {
 }
 
 .about-name {
-  font-family: var(--font-display);
+  font-family: 'Neue Haas Grotesk', sans-serif;
   font-size: clamp(3rem, 5vw, 4.5rem);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -2126,7 +2126,7 @@ div:has(> a[href*="spline.design"]) {
    LOGO CLOUD SECTION
    ============================================================ */
 .logo-cloud-section {
-  display: none;
+
   background-color: var(--bg-primary);
   padding: 0;
   position: relative;
@@ -2135,7 +2135,7 @@ div:has(> a[href*="spline.design"]) {
 
 @media (min-width: 1025px) {
   .logo-cloud-section {
-    display: block;
+
   }
 }
 
