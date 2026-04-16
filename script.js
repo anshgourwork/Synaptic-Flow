@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Scroll-based active section detection & Theme Switcher
-    const sections = ['hero', 'overview', 'about', 'testimonials', 'services', 'approach', 'solutions'];
-    const darkSections = ['overview', 'services', 'solutions'];
+    const sections = ['hero', 'overview', 'about', 'logo-cloud', 'testimonials', 'services', 'approach', 'solutions'];
+    const darkSections = ['overview', 'logo-cloud', 'services', 'solutions'];
 
     function updateActiveSection() {
       if (isHovering) return;
@@ -142,7 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Update active link styling
       navLinkEls.forEach((link) => {
-        if (link.dataset.section === activeSection) {
+        const linkSection = link.dataset.section;
+        let isActive = (linkSection === activeSection);
+        
+        // Grouping sub-sections to their parent nav links
+        if (activeSection === 'overview' && linkSection === 'hero') isActive = true;
+        if (activeSection === 'logo-cloud' && linkSection === 'about') isActive = true;
+
+        if (isActive) {
           link.classList.add('glass-active');
           currentActiveLink = link;
         } else {
