@@ -72,27 +72,80 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Liquid Glass Nav Indicator (Desktop Only) ---
-  if (window.innerWidth > 768) {
+  // --- Navigation active section detection & Theme Switcher (Desktop + Mobile) ---
+  const sections = ['hero', 'overview', 'about', 'logo-cloud', 'testimonials', 'services', 'approach', 'solutions'];
+  const darkSections = ['overview', 'logo-cloud', 'services', 'solutions'];
+  const navLinkEls = document.querySelectorAll('.nav-link');
+  const navGlassIndicator = document.getElementById('navGlassIndicator');
+  let currentActiveLink = null;
+  let isHovering = false;
+
+  function moveIndicatorTo(linkEl) {
+    if (!linkEl || !navGlassIndicator || window.innerWidth <= 768) return;
     const navLinksContainer = document.getElementById('navLinks');
-    const indicator = document.getElementById('navGlassIndicator');
-    const navLinkEls = navLinksContainer.querySelectorAll('.nav-link');
-    let currentActiveLink = null;
-    let isHovering = false;
+    const containerRect = navLinksContainer.getBoundingClientRect();
+    const linkRect = linkEl.getBoundingClientRect();
+    const left = linkRect.left - containerRect.left;
+    const width = linkRect.width;
 
-    function moveIndicatorTo(linkEl) {
-      if (!linkEl || !indicator) return;
-      const containerRect = navLinksContainer.getBoundingClientRect();
-      const linkRect = linkEl.getBoundingClientRect();
-      const left = linkRect.left - containerRect.left;
-      const width = linkRect.width;
+    navGlassIndicator.style.left = left + 'px';
+    navGlassIndicator.style.width = width + 'px';
+    navGlassIndicator.classList.add('active');
+  }
 
-      indicator.style.left = left + 'px';
-      indicator.style.width = width + 'px';
-      indicator.classList.add('active');
+  function updateActiveSection() {
+    if (isHovering) return;
+
+    const scrollY = window.scrollY + 100;
+    let activeSection = 'hero';
+
+    for (const id of sections) {
+      const section = document.getElementById(id);
+      if (section) {
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+        if (scrollY >= top && scrollY < bottom) {
+          activeSection = id;
+          break;
+        }
+      }
     }
 
-    // Hover events
+    // Update Nav Theme (Desktop + Mobile)
+    if (darkSections.includes(activeSection)) {
+      nav.classList.add('nav-over-dark');
+      nav.classList.remove('nav-over-light');
+    } else {
+      nav.classList.add('nav-over-light');
+      nav.classList.remove('nav-over-dark');
+    }
+
+    // Update active link styling
+    navLinkEls.forEach((link) => {
+      const linkSection = link.dataset.section;
+      let isActive = (linkSection === activeSection);
+      
+      // Grouping sub-sections to their parent nav links
+      if (activeSection === 'overview' && linkSection === 'hero') isActive = true;
+      if (activeSection === 'logo-cloud' && linkSection === 'about') isActive = true;
+
+      if (isActive) {
+        link.classList.add('glass-active');
+        currentActiveLink = link;
+      } else {
+        link.classList.remove('glass-active');
+      }
+    });
+
+    // Move indicator to active section
+    if (currentActiveLink && window.innerWidth > 768) {
+      moveIndicatorTo(currentActiveLink);
+    }
+  }
+
+  // Liquid Glass Nav Indicator Hover logic (Desktop Only)
+  if (window.innerWidth > 768) {
+    const navLinksContainer = document.getElementById('navLinks');
     navLinkEls.forEach((link) => {
       link.addEventListener('mouseenter', () => {
         isHovering = true;
@@ -105,70 +158,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (currentActiveLink) {
         moveIndicatorTo(currentActiveLink);
       } else {
-        indicator.classList.remove('active');
+        if (navGlassIndicator) navGlassIndicator.classList.remove('active');
       }
     });
-
-    // Scroll-based active section detection & Theme Switcher
-    const sections = ['hero', 'overview', 'about', 'logo-cloud', 'testimonials', 'services', 'approach', 'solutions'];
-    const darkSections = ['overview', 'logo-cloud', 'services', 'solutions'];
-
-    function updateActiveSection() {
-      if (isHovering) return;
-
-      const scrollY = window.scrollY + 100;
-      let activeSection = 'hero';
-
-      for (const id of sections) {
-        const section = document.getElementById(id);
-        if (section) {
-          const top = section.offsetTop;
-          const bottom = top + section.offsetHeight;
-          if (scrollY >= top && scrollY < bottom) {
-            activeSection = id;
-            break;
-          }
-        }
-      }
-
-      // Update Nav Theme (Desktop)
-      if (darkSections.includes(activeSection)) {
-        nav.classList.add('nav-over-dark');
-        nav.classList.remove('nav-over-light');
-      } else {
-        nav.classList.add('nav-over-light');
-        nav.classList.remove('nav-over-dark');
-      }
-
-      // Update active link styling
-      navLinkEls.forEach((link) => {
-        const linkSection = link.dataset.section;
-        let isActive = (linkSection === activeSection);
-        
-        // Grouping sub-sections to their parent nav links
-        if (activeSection === 'overview' && linkSection === 'hero') isActive = true;
-        if (activeSection === 'logo-cloud' && linkSection === 'about') isActive = true;
-
-        if (isActive) {
-          link.classList.add('glass-active');
-          currentActiveLink = link;
-        } else {
-          link.classList.remove('glass-active');
-        }
-      });
-
-      // Move indicator to active section
-      if (currentActiveLink) {
-        moveIndicatorTo(currentActiveLink);
-      }
-    }
-
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    // Initial position
-    setTimeout(() => {
-      updateActiveSection();
-    }, 100);
   }
+
+  window.addEventListener('scroll', updateActiveSection, { passive: true });
+  // Initial position
+  setTimeout(() => {
+    updateActiveSection();
+  }, 100);
 
   // --- Dynamic year in copyright ---
   const yearEl = document.querySelector('.footer-copy');

@@ -221,7 +221,7 @@ button {
   right: 0;
   z-index: 1000;
   padding: 1rem 0;
-  transition: all 0.5s var(--ease-out-expo);
+  transition: all 0.5s var(--ease-out-expo); will-change: width, padding, transform;
   background: transparent;
 }
 
@@ -287,7 +287,7 @@ button {
   gap: 0.25rem;
   padding: 0.35rem;
   border-radius: 100px;
-  transition: all 0.5s var(--ease-out-expo);
+  transition: all 0.5s var(--ease-out-expo); will-change: width, padding, transform;
   position: relative;
 
   /* Liquid Glass effect */
@@ -475,8 +475,8 @@ button {
 /* Scrolled state — Mobile (Black Box) */
 @media (max-width: 1023px) {
   .nav.scrolled {
-    background: #050505;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: transparent;
+    border-bottom: none;
   }
 
   .nav.scrolled .nav-logo {
@@ -524,6 +524,29 @@ button {
 }
 
 /* Scrolled state — Desktop (Transparent + Adaptive Logo) */
+
+/* Theme Switcher — Global (Desktop + Mobile) */
+/* These classes are toggled by script.js based on the scroll position */
+
+/* Over Light Sections: Logo should be Black */
+.nav-over-light .nav-logo {
+  color: #111111 !important;
+  mix-blend-mode: normal; /* Disabling mathematical blending for solid color switch */
+}
+.nav-over-light .nav-logo .logo-image {
+  filter: none !important; /* Original black color */
+}
+
+/* Over Dark Sections: Logo should be White */
+.nav-over-dark .nav-logo {
+  color: #ffffff !important;
+  mix-blend-mode: normal;
+}
+.nav-over-dark .nav-logo .logo-image {
+  filter: brightness(0) invert(1) !important; /* Force to white */
+}
+
+/* Scrolled state — Desktop (Transparent + Adaptive Logo) */
 @media (min-width: 1024px) {
   .nav.scrolled {
     background: transparent;
@@ -531,26 +554,6 @@ button {
     padding: 1.5rem 0; /* Sustained luxury padding */
   }
 
-  /* Theme Switcher — Desktop Only */
-  /* These classes are toggled by script.js based on the scroll position */
-
-  /* Over Light Sections: Logo should be Black */
-  .nav-over-light .nav-logo {
-    color: #111111 !important;
-    mix-blend-mode: normal; /* Disabling mathematical blending for solid color switch */
-  }
-  .nav-over-light .nav-logo .logo-image {
-    filter: none !important; /* Original black color */
-  }
-
-  /* Over Dark Sections: Logo should be White */
-  .nav-over-dark .nav-logo {
-    color: #ffffff !important;
-    mix-blend-mode: normal;
-  }
-  .nav-over-dark .nav-logo .logo-image {
-    filter: brightness(0) invert(1) !important; /* Force to white */
-  }
 
   .nav-logo {
     z-index: 1001;
@@ -572,18 +575,18 @@ button {
     color: #ffffff !important; /* White text on hover */
   }
 
-  /* Wider Navigation Pill — Desktop Only */
+  /* Optimized Navigation Pill — Desktop Only */
   .nav-links {
-    min-width: 520px; /* Generous fixed minimum width */
-    justify-content: space-around; /* Distribute links evenly across the width */
+    min-width: 540px; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    justify-content: space-around; 
     padding: 0.45rem 0.6rem !important;
   }
 
   .nav-link {
-    padding: 0.5rem 1.5rem !important; /* More breathing room per link */
+    padding: 0.5rem 1.6rem !important; transition: all 0.4s var(--ease-out-expo);
     flex: 1;
     text-align: center;
-    font-weight: 600 !important; /* Stronger typography for visibility */
+    font-weight: 600 !important; 
   }
 }
 
@@ -607,7 +610,11 @@ button {
   transition: all var(--transition-fast);
 }
 
-.nav.scrolled .nav-toggle span {
+.nav-over-light .nav-toggle span {
+  background: #111;
+}
+
+.nav-over-dark .nav-toggle span {
   background: #fff;
 }
 
@@ -699,27 +706,18 @@ button {
 
 /* Replicate staggered text layout from the image */
 .heading-line-1 {
-  align-self: flex-start;
-  margin-left: 0;
-  /* removed extreme overlap */
-  transform: translateX(-2%);
-  /* gentle stagger */
+  align-self: center;
 }
 
 .heading-line-2 {
-  font-size: 1.25em;
+  font-size: 1em;
   align-self: center;
 }
 
 .heading-line-3 {
-  align-self: flex-end;
-  margin-right: 0;
-  /* removed extreme overlap */
-  transform: translateX(4%);
-  /* gentle stagger */
+  align-self: center;
   letter-spacing: -0.02em;
-  /* relaxed from -0.08em to fix 'IT' overlap */
-  font-size: 1.4em;
+  font-size: 1em;
 }
 
 /* 3D Model area â€” center of hero */
@@ -1856,14 +1854,13 @@ div:has(> a[href*="spline.design"]) {
   font-weight: 600;
   color: #000;
   /* Liquid Glass effect */
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px) saturate(1.8);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(30px) saturate(2);
+  -webkit-backdrop-filter: blur(30px) saturate(2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
@@ -1900,8 +1897,20 @@ div:has(> a[href*="spline.design"]) {
 
 /* ——— Press ——— */
 .floating-cta-btn:active {
-  transform: scale(0.965);
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+  transform: scale(0.97);
+  background: rgba(255, 255, 255, 0.8);
+  transition: transform 0.1s ease;
+}
+
+/* Disable complex sliding hover/click effects globally for floating button */
+.floating-cta-btn .ihb-text-initial {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+.floating-cta-btn .ihb-text-hover,
+.floating-cta-btn .ihb-bg-effect {
+  display: none !important;
 }
 
 /* ——— Dark mode is now identical to the base — both are transparent ——— */
@@ -1991,10 +2000,21 @@ div:has(> a[href*="spline.design"]) {
   .floating-cta-btn {
     font-size: 0.82rem;
     padding: 0.62rem 1.75rem;
+    background: rgba(255, 255, 255, 0.9) !important; 
+    backdrop-filter: blur(30px) saturate(2) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
   }
 
   .floating-cta-bar {
     bottom: 1.25rem;
+    animation: fadeIn 1s ease both; /* Simplified entrance */
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
 
@@ -2218,6 +2238,82 @@ div:has(> a[href*="spline.design"]) {
 @keyframes logoSlide {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   HERO LOGO CLOUD (Mobile Only — inside hero section)
+   ============================================================ */
+.hero-logo-cloud {
+  display: none; /* Hidden on desktop */
+}
+
+@media (max-width: 768px) {
+  .hero-logo-cloud {
+    display: block;
+    width: 100%;
+    margin-top: 4rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .hero-logo-cloud-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .hero-logo-cloud-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0.9rem 0;
+  }
+
+  .hero-logo-cloud-label {
+    flex-shrink: 0;
+    font-family: var(--font-body);
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--hero-text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-left: var(--container-padding);
+    padding-right: 0.75rem;
+    margin: 0;
+  }
+
+  .hero-logo-cloud-slider {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, black 0%, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 0%, black 85%, transparent 100%);
+  }
+
+  .hero-logo-cloud-track {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    width: max-content;
+    animation: logoSlide 25s linear infinite;
+  }
+
+  .hero-logo-cloud-track img {
+    height: 14px;
+    width: auto;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  /* Hide the standalone logo cloud section on mobile */
+  .logo-cloud-section {
+    display: none !important;
+  }
 }
 
 /* ============================================================
@@ -2639,7 +2735,11 @@ div:has(> a[href*="spline.design"]) {
    ============================================================ */
 @media (max-width: 768px) {
   .hero {
-    min-height: 82vh !important; /* Reduced from 100vh to shrink empty middle space by 40% */
+    min-height: 70vh !important;
+  }
+
+  .section {
+    padding: 5rem 0 !important;
   }
 
   .hero-top-heading {
