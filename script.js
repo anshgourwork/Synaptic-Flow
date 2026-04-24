@@ -4,6 +4,28 @@
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Hero Skeleton Removal ---
+  const heroSkeleton = document.getElementById('heroSkeleton');
+  if (heroSkeleton) {
+    // We wait for a small delay to let the initial render settle
+    // and fonts to load properly
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        heroSkeleton.classList.add('fade-out');
+        // Optional: remove from DOM after fade animation
+        setTimeout(() => heroSkeleton.remove(), 800);
+      }, 500);
+    });
+    
+    // Fallback in case window.load takes too long
+    setTimeout(() => {
+      if (heroSkeleton.parentNode) {
+        heroSkeleton.classList.add('fade-out');
+        setTimeout(() => heroSkeleton.remove(), 800);
+      }
+    }, 3000);
+  }
+
   // --- Scroll Reveal with Intersection Observer ---
   const revealElements = document.querySelectorAll('.reveal');
 
