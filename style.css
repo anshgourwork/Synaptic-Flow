@@ -824,10 +824,11 @@ button {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background-image: url('Screenshot 2026-04-24 153358.webp');
+  background-image: url('Static.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  transform: scale(1.05);
 }
 
 /* Typography behind 3D model */
@@ -2729,8 +2730,8 @@ button {
     box-shadow 0.6s var(--ease-out-expo);
 }
 
-/* Visible state ï¿½ triggered by JS adding .card-visible */
-.solution-card.card-visible {
+/* Visible state — triggered by JS adding .visible */
+.solution-card.visible {
   opacity: 1;
   transform: translateY(0);
 }
