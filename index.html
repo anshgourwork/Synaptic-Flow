@@ -11,46 +11,21 @@
   <meta property="og:description" content="Redefining business efficiency with AI-native workflows and intelligent infrastructure.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://synaptic-flow-steel.vercel.app">
-  <meta property="og:image" content="https://synaptic-flow-steel.vercel.app/LOGO main.png">
+  <meta property="og:image" content="https://synaptic-flow-steel.vercel.app/LOGO main.webp">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Synaptic Flow">
   <meta name="twitter:description" content="Intelligent systems that think, adapt, and execute.">
-  <meta name="twitter:image" content="https://synaptic-flow-steel.vercel.app/LOGO main.png">
+  <meta name="twitter:image" content="https://synaptic-flow-steel.vercel.app/LOGO main.webp">
 
   <link rel="stylesheet" href="style.css?v=1.1">
   <link rel="stylesheet" href="scroll-stack.css?v=1.0">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cstyle%3E path %7B fill: black; %7D @media (prefers-color-scheme: dark) %7B path %7B fill: white; %7D %7D %3C/style%3E%3Cpath d='M24 73L44 33H64L44 73H24ZM52 65L72 25L84 25L84 35L72 65L52 65Z'/%3E%3C/svg%3E">
   
-  <!-- Preload Spline Models for faster delivery -->
-  <link rel="preload" href="https://prod.spline.design/l4Z8jUJ92peaxPtR/scene.splinecode" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="https://prod.spline.design/rme7AXOJMiiOCB2o/scene.splinecode" as="fetch" crossorigin="anonymous">
 
-  <!-- Spline JS Runtime -->
-  <script type="module">
-    import { Application } from 'https://esm.sh/@splinetool/runtime';
-    
-    document.addEventListener('DOMContentLoaded', () => {
-      // Skip Spline 3D on mobile for performance — show static image instead
-      if (window.innerWidth <= 768) {
-        const loader = document.getElementById('splineLoader');
-        if (loader) loader.classList.add('hidden');
-        return;
-      }
+  <!-- Three.js for Background Effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
 
-      const fgCanvas = document.getElementById('canvas3d');
-      const loader = document.getElementById('splineLoader');
-      
-      const appFg = new Application(fgCanvas);
-      
-      appFg.load('https://prod.spline.design/l4Z8jUJ92peaxPtR/scene.splinecode')
-        .then(() => {
-          loader.classList.add('hidden');
-          fgCanvas.classList.add('loaded');
-        })
-        .catch(err => console.error("Spline Load Error:", err));
-    });
-  </script>
 </head>
 <body>
 
@@ -63,7 +38,7 @@
   <nav class="nav" id="nav">
     <div class="container">
       <a href="#" class="nav-logo">
-        <img src="LOGO main.png" alt="Synaptic Flow Logo" class="logo-image">
+        <img src="LOGO main.webp" alt="Synaptic Flow Logo" class="logo-image">
         <span class="brand-text"><strong>SYNAPTIC</strong> FLOW</span>
       </a>
 
@@ -107,10 +82,21 @@
        HERO SECTION — Light, augen.pro inspired
        ============================================================ -->
   <section class="hero" id="hero">
+    <!-- LightPillar Background (Desktop Only) -->
+    <div id="lightPillarContainer" class="desktop-only" aria-hidden="true"></div>
+
     <!-- Top Heading -->
-    <h2 class="hero-top-heading reveal">
-      <span class="heading-line-1"><span class="if-word">YOUR</span> <span class="text-hollow">UNFAIR</span> <span class="text-solid">EDGE</span></span>
-      <span class="heading-line-2 text-solid">IN AI'S <span class="text-hollow">ERA</span></span>
+    <!-- Desktop: Left-aligned, 3 lines, Solid Black -->
+    <h2 class="hero-top-heading reveal desktop-only">
+      <span class="heading-line-1">YOUR UNFAIR</span>
+      <span class="heading-line-2">EDGE</span>
+      <span class="heading-line-3">IN AI'S ERA</span>
+    </h2>
+    
+    <!-- Mobile: Centered, 2 lines, Hollow/Solid Mix -->
+    <h2 class="hero-top-heading reveal mobile-only">
+      <span class="heading-line-1">YOUR <span class="text-hollow">UNFAIR</span> EDGE</span>
+      <span class="heading-line-2">IN <span class="text-solid">AI'S</span> <span class="text-hollow">ERA</span></span>
     </h2>
 
     <!-- Subheading with Scramble Effect -->
@@ -118,8 +104,36 @@
       <span id="specialTextSubheading" class="special-text-subheading"></span>
     </div>
 
-    <!-- Mobile-only Logo Cloud (inside hero, below subheading) -->
-    <div class="hero-logo-cloud" aria-label="Trusted brands">
+    <!-- Book a Call Button (Initially inline, then becomes floating) -->
+    <div class="floating-cta-bar" id="floatingCtaBar">
+      <a
+        href="https://cal.com/ansh-gour-oewwlq/30min"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="floating-cta-btn group"
+        id="floatingCtaBtn"
+        aria-label="Book a call with us"
+      >
+        <span class="ihb-text-initial">Book a call with us</span>
+        <div class="ihb-text-hover">
+          <span>Book a call with us</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+        <div class="ihb-bg-effect"></div>
+      </a>
+    </div>
+
+
+
+
+
+    <!-- Scroll indicator -->
+    <div class="hero-scroll">
+      <span class="scroll-arrow">↓</span>
+    </div>
+
+    <!-- Mobile-only Logo Cloud (repositioned to bottom) -->
+    <div class="hero-logo-cloud mobile-only" aria-label="Trusted brands">
       <div class="hero-logo-cloud-divider"></div>
       <div class="hero-logo-cloud-row">
         <p class="hero-logo-cloud-label">Used by the best</p>
@@ -146,31 +160,6 @@
         </div>
       </div>
       <div class="hero-logo-cloud-divider"></div>
-    </div>
-
-    <!-- Central 3D visual area -->
-    <div class="hero-visual">
-      <!-- Static fallback for mobile (no WebGL needed) -->
-
-
-      <!-- Spline 3D Scene (desktop only) -->
-      <div class="spline-container" id="spline-hero">
-        <!-- Loading state -->
-        <div class="spline-loader" id="splineLoader">
-          <div class="spline-spinner"></div>
-          <span>Loading 3D Scene...</span>
-        </div>
-        
-        <!-- Canvas for Foreground Robot -->
-        <canvas id="canvas3d"></canvas>
-      </div>
-    </div>
-
-
-
-    <!-- Scroll indicator -->
-    <div class="hero-scroll">
-      <span class="scroll-arrow">↓</span>
     </div>
 
     <!-- Light-to-dark transition gradient & blur -->
@@ -207,7 +196,7 @@
       </div>
       <div class="about-grid">
         <div class="about-image reveal">
-          <img src="ansh.jpg.jpeg" alt="Ansh Gour">
+          <img src="ansh.jpg.webp" alt="Ansh Gour" loading="lazy">
         </div>
         <div class="about-content reveal reveal-delay-1">
           <div class="about-header">
@@ -230,42 +219,6 @@
 
 
 
-  <!-- ============================================================
-       LOGO CLOUD SECTION (Desktop Only)
-       ============================================================ -->
-  <section class="section logo-cloud-section" id="logo-cloud" aria-label="Tools used by the best">
-    <div class="logo-cloud-inner">
-      <div class="logo-cloud-header">
-        <p class="logo-cloud-sub">Already used by</p>
-        <h2 class="logo-cloud-heading">Best in the Game</h2>
-      </div>
-      <div class="logo-cloud-divider"></div>
-      <div class="logo-cloud-slider-wrapper">
-        <div class="logo-cloud-slider" id="logoCloudSlider">
-          <div class="logo-cloud-track">
-            <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="Nvidia" loading="lazy">
-            <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="Supabase" loading="lazy">
-            <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="OpenAI" loading="lazy">
-            <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="Turso" loading="lazy">
-            <img src="https://svgl.app/library/vercel_wordmark.svg" alt="Vercel" loading="lazy">
-            <img src="https://svgl.app/library/github_wordmark_light.svg" alt="GitHub" loading="lazy">
-            <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="Claude AI" loading="lazy">
-            <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="Clerk" loading="lazy">
-            <!-- Duplicated for seamless loop -->
-            <img src="https://svgl.app/library/nvidia-wordmark-light.svg" alt="" loading="lazy" aria-hidden="true">
-            <img src="https://svgl.app/library/supabase_wordmark_light.svg" alt="" loading="lazy" aria-hidden="true">
-            <img src="https://svgl.app/library/openai_wordmark_light.svg" alt="" loading="lazy" aria-hidden="true">
-            <img src="https://svgl.app/library/turso-wordmark-light.svg" alt="" loading="lazy" aria-hidden="true">
-            <img src="https://svgl.app/library/vercel_wordmark.svg" alt="" loading="lazy" aria-hidden="true">
-            <img src="https://svgl.app/library/github_wordmark_light.svg" alt="" loading="lazy" aria-hidden="true">
-            <img src="https://svgl.app/library/claude-ai-wordmark-icon_light.svg" alt="" loading="lazy" aria-hidden="true">
-            <img src="https://svgl.app/library/clerk-wordmark-light.svg" alt="" loading="lazy" aria-hidden="true">
-          </div>
-        </div>
-      </div>
-      <div class="logo-cloud-divider"></div>
-    </div>
-  </section>
 
   <!-- ============================================================
        TESTIMONIALS SECTION
@@ -584,30 +537,6 @@
 
   <script src="script.js"></script>
 
-  <!-- ============================================================
-       LIQUID GLASS BUTTON — Fixed bottom CTA
-       ============================================================ -->
-
-
-
-  <!-- Fixed bottom pill button -->
-  <div class="floating-cta-bar" id="floatingCtaBar">
-    <a
-      href="https://cal.com/ansh-gour-oewwlq/30min"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="floating-cta-btn group"
-      id="floatingCtaBtn"
-      aria-label="Book a call with us"
-    >
-      <span class="ihb-text-initial">Book a call with us</span>
-      <div class="ihb-text-hover">
-        <span>Book a call with us</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </div>
-      <div class="ihb-bg-effect"></div>
-    </a>
-  </div>
 
 </body>
 </html>

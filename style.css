@@ -8,6 +8,7 @@
   src: url('neuehaasgrotdisp-55roman-trial.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -15,6 +16,7 @@
   src: url('neuehaasgrotdispround-75bold-trial.otf') format('opentype');
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -22,6 +24,7 @@
   src: url('Druk-Super-Trial.otf') format('opentype');
   font-weight: 900;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -29,6 +32,7 @@
   src: url('DrukTextWide-Super-Trial.otf') format('opentype');
   font-weight: 900;
   font-style: normal;
+  font-display: swap;
 }
 
 /* --- Google Fonts --- */
@@ -588,6 +592,30 @@ button {
     text-align: center;
     font-weight: 600 !important; 
   }
+
+  /* Desktop Dark Theme on Hero (Overrides for new background) */
+  .nav-over-light:not(.scrolled) .nav-logo {
+    color: #ffffff !important;
+  }
+  .nav-over-light:not(.scrolled) .nav-logo .logo-image {
+    filter: brightness(0) invert(1) !important;
+  }
+  .nav-over-light:not(.scrolled) .nav-links {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) saturate(1.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2) !important;
+  }
+  .nav-over-light:not(.scrolled) .nav-link {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+  .nav-over-light:not(.scrolled) .nav-link:hover,
+  .nav-over-light:not(.scrolled) .nav-link.glass-active {
+    color: #ffffff !important;
+  }
+  .nav-over-light:not(.scrolled) .nav-glass-indicator {
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
 }
 
 
@@ -643,10 +671,34 @@ button {
   color: var(--hero-text);
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   .hero {
     min-height: 115vh; /* Increased for desktop */
   }
+}
+
+/* Utility Classes */
+.desktop-only { display: none !important; }
+.mobile-only { display: flex !important; }
+
+@media (min-width: 768px) {
+  .desktop-only { display: flex !important; }
+  .mobile-only { display: none !important; }
+}
+
+#lightPillarContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-image: url('Screenshot 2026-04-24 153358.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Typography behind 3D model */
@@ -656,43 +708,113 @@ button {
   flex-direction: column;
   align-items: center;
   font-family: 'DrukTextWide', sans-serif;
-  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-size: clamp(2rem, 10vw, 3.5rem);
   font-weight: 900;
-  letter-spacing: -0.02em;
-  /* adjusted */
-  margin-top: 8rem;
+  letter-spacing: -0.01em;
+  margin-top: 9rem;
   position: relative;
-  z-index: 0;
-  line-height: 1.0;
-  /* eased up to reduce vertical overlap */
+  z-index: 2;
+  line-height: 1.1;
   text-transform: uppercase;
+  text-align: center;
+  color: var(--hero-text);
+  transition: all 0.8s var(--ease-out-expo);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    background: #000000 !important;
+  }
+  .hero-top-heading {
+    align-self: flex-start;
+    align-items: flex-start;
+    font-family: 'Druk', sans-serif;
+    font-size: clamp(3rem, 8vw, 7.5rem);
+    margin-top: 15rem;
+    margin-left: 5vw;
+    text-align: left;
+    color: #d6d3e1 !important;
+    line-height: 0.9;
+  }
 }
 
 /* Subheading Wrapper & Special Text */
 .hero-subheading-wrapper {
-  display: none; /* Hidden by default (Desktop) */
   align-self: center;
-  margin-top: 4.5rem;
+  margin-top: 3rem;
   z-index: 10;
   text-align: center;
   width: 100%;
+  padding: 0 var(--container-padding);
+}
+
+@media (min-width: 768px) {
+  .hero-subheading-wrapper {
+    display: block;
+    align-self: flex-start;
+    text-align: left;
+    margin-left: 5vw;
+    margin-top: 1.5rem;
+    width: auto;
+    padding: 0;
+  }
 }
 
 .special-text-subheading {
-  font-family: inherit; /* overridden on mobile */
+  font-family: var(--font-body);
   font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
-  color: var(--hero-text-secondary);
   letter-spacing: 0.05em;
   display: inline-block;
   min-height: 1.5em;
   white-space: pre-wrap;
-  transition: opacity 0.3s ease;
+  color: #ffffff;
+  background: none;
+  animation: none;
+  pointer-events: auto;
+}
+
+@media (max-width: 1024px) {
+  .special-text-subheading {
+    color: transparent !important;
+    background: linear-gradient(
+      135deg,
+      #000 0%,
+      #000 40%,
+      #fff 50%,
+      #000 60%,
+      #000 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: textShine 6s linear infinite;
+  }
+}
+
+@media (min-width: 768px) {
+  .special-text-subheading {
+    font-family: 'Neue Haas Grotesk', sans-serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: bold;
+    line-height: 1.5;
+    color: #ffffff !important;
+    background: none !important;
+    -webkit-text-fill-color: #ffffff !important;
+    animation: none !important;
+    background-image: none !important;
+  }
+}
+
+@keyframes textShine {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
 
 .special-text-subheading.reveal-done {
   color: var(--hero-text);
 }
+
 
 .text-hollow {
   color: transparent;
@@ -705,113 +827,26 @@ button {
 }
 
 /* Replicate staggered text layout from the image */
-.heading-line-1 {
-  align-self: center;
-}
-
-.heading-line-2 {
-  font-size: 1em;
-  align-self: center;
-}
-
+.heading-line-1,
+.heading-line-2,
 .heading-line-3 {
   align-self: center;
-  letter-spacing: -0.02em;
-  font-size: 1em;
+  text-align: center;
 }
 
-/* 3D Model area â€” center of hero */
-.hero-visual {
-  position: absolute;
-  top: 15rem;
-  /* Starts just below the banner */
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.spline-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-#canvas3d {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-#canvas3d {
-  z-index: 1;
-  transform: scale(1.2);
-  /* Make the model 20% bigger */
-  transition: opacity 0.8s var(--ease-out-expo);
-}
-
-#canvas3d.loaded {
-  opacity: 1;
-}
-
-/* Hide the 'Built with Spline' badge extremely aggressively */
-a[href*="spline.design"],
-.spline-watermark,
-div:has(> a[href*="spline.design"]) {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
-/* Spline loading state */
-.spline-loader {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  z-index: 2;
-  transition: opacity 0.5s var(--ease-out-expo);
-}
-
-.spline-loader.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.spline-loader span {
-  font-size: 0.75rem;
-  color: var(--hero-text-muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.spline-spinner {
-  width: 32px;
-  height: 32px;
-  border: 2px solid rgba(0, 0, 0, 0.08);
-  border-top-color: var(--hero-text-secondary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@media (min-width: 768px) {
+  .heading-line-1,
+  .heading-line-2,
+  .heading-line-3 {
+    align-self: flex-start;
+    text-align: left;
   }
 }
+
+
+
+/* Blend robot with background */
+
 
 
 /* Bottom content — overlaid on hero */
@@ -1623,10 +1658,10 @@ div:has(> a[href*="spline.design"]) {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.015;
+  background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
   background-repeat: repeat;
-  background-size: 256px 256px;
+  background-size: 200px 200px;
 }
 
 /* ============================================================
@@ -1670,7 +1705,7 @@ div:has(> a[href*="spline.design"]) {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .services-header {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -1695,7 +1730,7 @@ div:has(> a[href*="spline.design"]) {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .nav-links {
     display: none;
   }
@@ -1722,11 +1757,14 @@ div:has(> a[href*="spline.design"]) {
   }
 
   .hero-top-heading {
-    margin-top: 9rem;
+    margin-top: 14rem;
+    margin-left: var(--container-padding);
     font-size: clamp(2rem, 10vw, 3.5rem);
     /* Much smaller for mobile */
     letter-spacing: -0.01em;
     line-height: 1.1;
+    align-items: flex-start;
+    text-align: left;
   }
 
   .heading-line-1,
@@ -1820,12 +1858,41 @@ div:has(> a[href*="spline.design"]) {
   position: fixed;
   bottom: 2rem;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(0);
+  margin-top: 0;
+  margin-left: 0;
+  width: auto;
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: lgFadeUp 0.8s 0.6s var(--ease-out-expo) both;
+  animation: lgFadeUp 0.8s var(--ease-out-expo) both;
+  pointer-events: auto; /* Ensure button is clickable */
+}
+
+@media (min-width: 768px) {
+  .floating-cta-bar {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: 2rem;
+    margin-left: 5vw;
+    width: auto;
+    z-index: 100;
+    justify-content: flex-start;
+    animation: none;
+  }
+
+  .floating-cta-bar.fixed {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    margin-top: 0;
+    margin-left: 0;
+    animation: lgFadeUp 0.8s var(--ease-out-expo) both;
+  }
 }
 
 @keyframes lgFadeUp {
@@ -1986,7 +2053,7 @@ div:has(> a[href*="spline.design"]) {
 }
 
 /* ——— Responsive ——— */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .testimonials-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -2153,7 +2220,7 @@ div:has(> a[href*="spline.design"]) {
   overflow: hidden;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   .logo-cloud-section {
 
   }
@@ -2247,11 +2314,11 @@ div:has(> a[href*="spline.design"]) {
   display: none; /* Hidden on desktop */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .hero-logo-cloud {
     display: block;
     width: 100%;
-    margin-top: 12rem;
+    margin-top: 5rem;
     position: relative;
     z-index: 10;
   }
@@ -2504,7 +2571,7 @@ div:has(> a[href*="spline.design"]) {
 }
 
 /* Mobile Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .solutions-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2574,24 +2641,6 @@ div:has(> a[href*="spline.design"]) {
    MOBILE PERFORMANCE OPTIMIZATIONS
    ============================================================ */
 
-/* Static robot image — hidden on desktop, shown on mobile */
-.hero-robot-static {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  /* Show static robot image on mobile, hide Spline canvas */
-  .hero-robot-static {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-  }
-
-  .spline-container {
-    display: none !important; /* Kill WebGL entirely on mobile */
-  }
 
   /* Disable noise overlay on mobile for performance */
   .noise-overlay {
@@ -2602,7 +2651,7 @@ div:has(> a[href*="spline.design"]) {
 /* ============================================================
    GLOW CARD EFFECT (Desktop Only)
    ============================================================ */
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   [data-glow] {
     --border-size: calc(var(--border, 2) * 1px);
     --spotlight-size: calc(var(--size, 150) * 1px);
@@ -2733,7 +2782,7 @@ div:has(> a[href*="spline.design"]) {
 /* ============================================================
    RESPONSIVE OVERRIDES
    ============================================================ */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .hero {
     min-height: 90vh !important;
   }
@@ -2746,10 +2795,17 @@ div:has(> a[href*="spline.design"]) {
     font-family: 'Druk', sans-serif !important;
     font-size: clamp(3rem, 15vw, 5rem);
     letter-spacing: -0.01em;
+    text-align: center !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 6rem !important; /* Moved up from 9rem */
+    align-items: center !important;
   }
 
   .hero-subheading-wrapper {
     display: block; /* Visible only on Mobile */
+    margin-top: 4rem !important; /* Move subheading down */
   }
 
   .special-text-subheading {
