@@ -831,6 +831,13 @@ button {
   transform: scale(1.05);
 }
 
+/* Accessibility: Hide 3D pillar if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #lightPillarContainer canvas {
+    display: none !important;
+  }
+}
+
 /* Typography behind 3D model */
 .hero-top-heading {
   align-self: center;

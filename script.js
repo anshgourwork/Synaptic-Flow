@@ -302,6 +302,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- LightPillar Effect Implementation (Vanilla Adaptation) ---
   class LightPillarEffect {
     constructor(options = {}) {
+      // Check for prefers-reduced-motion to boost performance and accessibility
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+
       this.container = document.getElementById(options.containerId || 'lightPillarContainer');
       if (!this.container || window.innerWidth < 768) return;
 
@@ -390,9 +395,16 @@ document.addEventListener('DOMContentLoaded', () => {
           powerPreference: effectiveQuality === 'high' ? 'high-performance' : 'low-power',
           precision: settings.precision,
           stencil: false,
-          depth: false
+          depth: false,
+          // CRITICAL: Fail if the browser is using software rendering (no GPU acceleration)
+          // This allows the CSS static background image to show instead of a lagging 3D scene.
+          failIfMajorPerformanceCaveat: true,
+          premultipliedAlpha: false
         });
-      } catch (e) { return; }
+      } catch (e) { 
+        console.warn("WebGL Performance Caveat detected or WebGL not supported. Falling back to static image.");
+        return; 
+      }
 
       this.renderer.setSize(width, height);
       this.renderer.setPixelRatio(settings.pixelRatio);
