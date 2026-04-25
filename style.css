@@ -1663,10 +1663,13 @@ button {
 
 .footer-brand {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
   padding-right: 2rem;
+  position: relative;
+  min-height: 200px;
 }
 
 .footer-top {
@@ -1679,17 +1682,25 @@ button {
 .footer-brand .nav-logo {
   color: #fff;
   margin-left: auto;
+  position: relative;
+  z-index: 2;
   /* Push text closer to the columns on the right */
 }
 
 .footer-huge-logo {
   width: 100%;
-  max-width: 250px;
+  max-width: 500px;
   /* Make it massive in the empty space */
   filter: brightness(0) invert(1);
   /* Pure white */
   opacity: 1;
-  /* Beautiful vivid white logo */
+  /* Pure white as requested */
+  position: absolute;
+  left: -100px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .footer-brand .logo-icon {
@@ -1964,8 +1975,17 @@ button {
 
   .footer-brand .nav-logo {
     margin-left: 0;
-    position: static;
+    position: relative;
+    z-index: 2;
     transform: none;
+  }
+
+  .footer-huge-logo {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 300px;
+    opacity: 0.1; /* Much more subtle on mobile to avoid clashing with text */
   }
 
   .footer-bottom {
