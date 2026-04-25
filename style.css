@@ -831,11 +831,15 @@ button {
   transform: scale(1.05);
 }
 
-/* Accessibility: Hide 3D pillar if user prefers reduced motion */
+/* Accessibility: Hide 3D pillar if user prefers reduced motion or device is low-performance */
 @media (prefers-reduced-motion: reduce) {
   #lightPillarContainer canvas {
     display: none !important;
   }
+}
+
+.is-low-performance #lightPillarContainer canvas {
+  display: none !important;
 }
 
 /* Typography behind 3D model */

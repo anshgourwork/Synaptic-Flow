@@ -308,7 +308,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       this.container = document.getElementById(options.containerId || 'lightPillarContainer');
-      if (!this.container || window.innerWidth < 768) return;
+      if (!this.container) return;
+
+      // --- Performance & Device Detection ---
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      // Check for low-end hardware (RAM and CPU cores)
+      // navigator.deviceMemory is available in Chrome/Android (units in GB)
+      // navigator.hardwareConcurrency is the number of logical processors
+      const lowMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
+      const lowCPU = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
+      const isLowEnd = lowMemory || lowCPU;
+
+      // If it's a low-end device or a small mobile screen, we stick to the static image
+      if (isLowEnd || (isMobile && window.innerWidth < 768)) {
+        document.body.classList.add('is-low-performance');
+        console.log("Low-end device or mobile detected. Using static background.");
+        return;
+      }
 
       this.topColor = options.topColor || '#d6d3e1';
       this.bottomColor = options.bottomColor || '#000000';
