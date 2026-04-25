@@ -311,19 +311,27 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!this.container) return;
 
       // --- Performance & Device Detection ---
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                       (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
       
       // Check for low-end hardware (RAM and CPU cores)
-      // navigator.deviceMemory is available in Chrome/Android (units in GB)
-      // navigator.hardwareConcurrency is the number of logical processors
-      const lowMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
-      const lowCPU = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
-      const isLowEnd = lowMemory || lowCPU;
+      // We are more aggressive here because high iterations (80) of a raymarching shader 
+      // are extremely heavy for integrated GPUs.
+      const lowMemory = navigator.deviceMemory ? navigator.deviceMemory <= 4 : false;
+      const lowCPU = navigator.hardwareConcurrency ? navigator.hardwareConcurrency <= 4 : false;
+      
+      // Check for Data Saver mode
+      const isDataSaver = navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType));
+      
+      // Check for prefers-reduced-motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // If it's a low-end device or a small mobile screen, we stick to the static image
-      if (isLowEnd || (isMobile && window.innerWidth < 768)) {
+      const isLowEnd = lowMemory || lowCPU || isDataSaver || prefersReducedMotion;
+
+      // If it's a low-end device, small screen, or user preferences dictate performance
+      if (isLowEnd || (isMobile && window.innerWidth < 1024)) {
         document.body.classList.add('is-low-performance');
-        console.log("Low-end device or mobile detected. Using static background.");
+        console.log("Performance optimization active: Using static background fallback.");
         return;
       }
 
@@ -419,6 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
           premultipliedAlpha: false
         });
       } catch (e) { 
+        document.body.classList.add('is-low-performance');
         console.warn("WebGL Performance Caveat detected or WebGL not supported. Falling back to static image.");
         return; 
       }
