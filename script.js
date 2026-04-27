@@ -198,89 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
     yearEl.textContent = yearEl.textContent.replace('2026', year);
   }
 
-  // --- Subheading Text & Scramble ---
-  const RANDOM_CHARS = "_!X$0-+*#";
-  function getRandomChar(prevChar) {
-    let char;
-    do { char = RANDOM_CHARS[Math.floor(Math.random() * RANDOM_CHARS.length)]; }
-    while (char === prevChar);
-    return char;
-  }
-
-  function initSpecialText(elementId, text, speed = 25, delay = 0.8) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    let animationStep = 0;
-    let currentPhase = 'phase1';
-    let intervalId = null;
-
-    const runPhase1 = () => {
-      const maxSteps = text.length * 2;
-      const currentLength = Math.min(animationStep + 1, text.length);
-      let chars = "";
-      for (let i = 0; i < currentLength; i++) {
-        if (text[i] === "\n") {
-          chars += "\n";
-        } else {
-          chars += getRandomChar(chars[i - 1]);
-        }
-      }
-      for (let i = currentLength; i < text.length; i++) {
-        chars += (text[i] === "\n") ? "\n" : "\u00A0"; 
-      }
-      el.textContent = chars;
-      if (animationStep < maxSteps - 1) {
-        animationStep++;
-      } else {
-        currentPhase = 'phase2';
-        animationStep = 0;
-      }
-    };
-
-    const runPhase2 = () => {
-      const revealedCount = Math.floor(animationStep / 2);
-      let chars = "";
-      for (let i = 0; i < revealedCount && i < text.length; i++) {
-        chars += text[i];
-      }
-      if (revealedCount < text.length) {
-        if (text[revealedCount] === "\n") {
-          chars += "\n";
-        } else {
-          chars += (animationStep % 2 === 0) ? "_" : getRandomChar();
-        }
-      }
-      for (let i = chars.length; i < text.length; i++) {
-        if (text[i] === "\n") {
-          chars += "\n";
-        } else {
-          chars += getRandomChar();
-        }
-      }
-      el.textContent = chars;
-      if (animationStep < text.length * 2 - 1) {
-        animationStep++;
-      } else {
-        el.textContent = text;
-        clearInterval(intervalId);
-        el.classList.add('reveal-done', 'shiny-text');
-      }
-    };
-
-    const startAnimation = () => {
-      intervalId = setInterval(() => {
-        if (currentPhase === 'phase1') runPhase1();
-        else runPhase2();
-      }, speed);
-    };
-
-    setTimeout(startAnimation, delay * 1000);
-  }
-
+  // --- Subheading Text ---
   const subheadingText = "Intelligence that runs your business\nbehind the scenes";
   const el = document.getElementById('specialTextSubheading');
-  if (el) el.textContent = subheadingText;
+  if (el) {
+    el.textContent = subheadingText;
+  }
 
   // --- CTA Button Sticky Behavior (Desktop Only) ---
   const floatingCta = document.getElementById('floatingCtaBar');
@@ -302,38 +225,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- LightPillar Effect Implementation (Vanilla Adaptation) ---
   class LightPillarEffect {
     constructor(options = {}) {
-      // Check for prefers-reduced-motion to boost performance and accessibility
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return;
-      }
-
       this.container = document.getElementById(options.containerId || 'lightPillarContainer');
       if (!this.container) return;
-
-      // --- Performance & Device Detection ---
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                       (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
-      
-      // Check for low-end hardware (RAM and CPU cores)
-      // We are more aggressive here because high iterations (80) of a raymarching shader 
-      // are extremely heavy for integrated GPUs.
-      const lowMemory = navigator.deviceMemory ? navigator.deviceMemory <= 4 : false;
-      const lowCPU = navigator.hardwareConcurrency ? navigator.hardwareConcurrency <= 4 : false;
-      
-      // Check for Data Saver mode
-      const isDataSaver = navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType));
-      
-      // Check for prefers-reduced-motion
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      const isLowEnd = lowMemory || lowCPU || isDataSaver || prefersReducedMotion;
-
-      // If it's a low-end device, small screen, or user preferences dictate performance
-      if (isLowEnd || (isMobile && window.innerWidth < 1024)) {
-        document.body.classList.add('is-low-performance');
-        console.log("Performance optimization active: Using static background fallback.");
-        return;
-      }
 
       this.topColor = options.topColor || '#d6d3e1';
       this.bottomColor = options.bottomColor || '#000000';
@@ -405,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         high: {
           iterations: 80,
           waveIterations: 4,
-          pixelRatio: Math.min(window.devicePixelRatio, 2),
+          pixelRatio: Math.min(window.devicePixelRatio, 1.5), // Capped at 1.5 — visually identical, ~44% fewer pixels vs 2.0
           precision: 'highp',
           stepMultiplier: 1.0
         }
@@ -413,24 +306,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const settings = qualitySettings[effectiveQuality] || qualitySettings.medium;
 
-      try {
-        this.renderer = new THREE.WebGLRenderer({
-          antialias: false,
-          alpha: true,
-          powerPreference: effectiveQuality === 'high' ? 'high-performance' : 'low-power',
-          precision: settings.precision,
-          stencil: false,
-          depth: false,
-          // CRITICAL: Fail if the browser is using software rendering (no GPU acceleration)
-          // This allows the CSS static background image to show instead of a lagging 3D scene.
-          failIfMajorPerformanceCaveat: true,
-          premultipliedAlpha: false
-        });
-      } catch (e) { 
-        document.body.classList.add('is-low-performance');
-        console.warn("WebGL Performance Caveat detected or WebGL not supported. Falling back to static image.");
-        return; 
-      }
+      this.renderer = new THREE.WebGLRenderer({
+        antialias: false,
+        alpha: true,
+        powerPreference: effectiveQuality === 'high' ? 'high-performance' : 'low-power',
+        precision: settings.precision,
+        stencil: false,
+        depth: false,
+        premultipliedAlpha: false
+      });
 
       this.renderer.setSize(width, height);
       this.renderer.setPixelRatio(settings.pixelRatio);
@@ -566,6 +450,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const currentTime = performance.now();
       const deltaTime = currentTime - this.lastTime;
+
+      // --- Throttle to ~30 FPS (ambient animation doesn't need 60) ---
+      if (deltaTime < 33) {
+        this.rafId = requestAnimationFrame(() => this.animate());
+        return;
+      }
       this.lastTime = currentTime;
 
       this.time += 0.01 * this.rotationSpeed;
@@ -574,21 +464,30 @@ document.addEventListener('DOMContentLoaded', () => {
       this.material.uniforms.uRotSin.value = Math.sin(this.time * 0.3);
       
       this.renderer.render(this.scene, this.camera);
-      this.rafId = requestAnimationFrame((t) => this.animate(t));
+      this.rafId = requestAnimationFrame(() => this.animate());
     }
   }
 
   // Initialize the Pillar Background
-  new LightPillarEffect({
-    topColor: '#d6d3e1',
-    bottomColor: '#000000',
-    intensity: 0.9,      
-    rotationSpeed: 0.3,  
-    pillarWidth: 3.0,    
-    pillarRotation: 45,
-    glowAmount: 0.003,    
-    noiseIntensity: 0.2
-  });
+  // THREE.js is loaded with `async` — wait for it to be available
+  function initLightPillar() {
+    if (typeof THREE === 'undefined') {
+      // THREE not loaded yet, retry shortly
+      setTimeout(initLightPillar, 50);
+      return;
+    }
+    new LightPillarEffect({
+      topColor: '#d6d3e1',
+      bottomColor: '#000000',
+      intensity: 0.9,      
+      rotationSpeed: 0.3,  
+      pillarWidth: 3.0,    
+      pillarRotation: 45,
+      glowAmount: 0.003,    
+      noiseIntensity: 0.2
+    });
+  }
+  initLightPillar();
 });
 
 /* ============================================================
